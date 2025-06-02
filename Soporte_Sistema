@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos TIC - Unidad Educativa Dr. Camilo Gallegos Domínguez</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap">
+    <style>
+        :root {
+            --amarillo-principal: #FFD700;
+            --amarillo-secundario: #FFEC8B;
+            --azul-principal: #0056b3;
+            --azul-secundario: #007BFF;
+            --azul-oscuro: #003366;
+            --blanco: #FFFFFF;
+            --gris-claro: #f5f5f5;
+            --gris-oscuro: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-principal));
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--blanco);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sello-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .sello {
+            width: 160px;
+            height: 160px;
+            background-color: var(--blanco);
+            border: 5px solid var(--amarillo-principal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+            position: relative;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .sello::before {
+            content: "SELLO OFICIAL";
+            position: absolute;
+            top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--azul-principal);
+            letter-spacing: 2px;
+        }
+        
+        .sello img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 50%;
+        }
+        
+        .institucion {
+            font-size: 2.2rem;
+            color: var(--blanco);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            margin: 20px 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        @media (min-width: 992px) {
+            .main-content {
+                grid-template-columns: 3fr 2fr;
+            }
+        }
+        
+        .card {
+            background: var(--blanco);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(0, 86, 179, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            color: var(--azul-principal);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--amarillo-principal);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 12px;
+            color: var(--amarillo-principal);
+            font-size: 1.8rem;
+        }
+        
+        /* Matriz de Proyectos */
+        .matriz {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: var(--azul-principal);
+            color: var(--blanco);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(0, 86, 179, 0.03);
+        }
+        
+        tr:hover {
+            background-color: rgba(255, 215, 0, 0.08);
+        }
+        
+        .modulo-chip {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .programacion-chip {
+            background: rgba(0, 123, 255, 0.15);
+            color: var(--azul-principal);
+            border: 1px solid rgba(0, 123, 255, 0.3);
+        }
+        
+        .soporte-chip {
+            background: rgba(255, 193, 7, 0.15);
+            color: #b28704;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .redes-chip {
+            background: rgba(40, 167, 69, 0.15);
+            color: #1e7e34;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        /* Especificaciones Técnicas */
+        .especificaciones {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .especificaciones {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .especificacion-card {
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .especificacion-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .especificacion-card.redes {
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.05), rgba(0, 86, 179, 0.15));
+            border: 1px solid rgba(0, 86, 179, 0.2);
+        }
+        
+        .especificacion-card.soporte {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.15));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .especificacion-title {
+            font-size: 1.4rem;
+            color: var(--azul-oscuro);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--amarillo-principal);
+            display: flex;
+            align-items: center;
+        }
+        
+        .especificacion-title i {
+            margin-right: 10px;
+            width: 36px;
+            height: 36px;
+            background: var(--amarillo-principal);
+            color: var(--azul-oscuro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .requisitos-list {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        .requisitos-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .requisitos-list li:before {
+            content: "•";
+            color: var(--azul-principal);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+        
+        .ejemplo {
+            background: rgba(0, 86, 179, 0.05);
+            border-left: 4px solid var(--azul-principal);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .codigo {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .codigo-comment {
+            color: #7f8c8d;
+        }
+        
+        .codigo-keyword {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .circuito-img {
+            width: 100%;
+            background: var(--gris-claro);
+            height: 200px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--azul-principal);
+            font-weight: bold;
+            border: 2px dashed var(--amarillo-principal);
+        }
+        
+        /* Botones */
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .btn-primary {
+            background: var(--azul-principal);
+            color: var(--blanco);
+            box-shadow: 0 6px 12px rgba(0, 86, 179, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: #004494;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 86, 179, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--amarillo-principal);
+            color: var(--gris-oscuro);
+            box-shadow: 0 6px 12px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: #e6c200;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, var(--azul-oscuro), var(--azul-principal));
+            color: var(--blanco);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 20px;
+        }
+        
+        .modulos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .modulo {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        /* Animaciones */
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .institucion {
+                font-size: 1.6rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+            
+            .especificaciones {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="sello-container">
+                <div class="sello pulse">
+                    <div>SELLO.jpg</div>
+                </div>
+            </div>
+            <h1 class="institucion">UNIDAD EDUCATIVA DR. CAMILO GALLEGOS DOMÍNGUEZ</h1>
+        </header>
+        
+        <div class="main-content">
+            <div>
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-project-diagram"></i> Matriz de Proyectos por Módulo</h2>
+                    <div class="matriz">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Módulo</th>
+                                    <th>Tema del Proyecto</th>
+                                    <th>Grupo</th>
+                                    <th>Estudiantes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="modulo-chip programacion-chip">Programación y Bases de Datos</span></td>
+                                    <td>Sistema de Gestión Escolar</td>
+                                    <td>Grupo A</td>
+                                    <td>30 estudiantes</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="modulo-chip soporte-chip">Soporte Técnico</span></td>
+                                    <td>Circuito de Control de Acceso</td>
+                                    <td>Grupo B</td>
+                                    <td>30 estudiantes</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="modulo-chip redes-chip">Sistema Operativo y Redes</span></td>
+                                    <td>Script de Automatización BAT</td>
+                                    <td>Grupo C</td>
+                                    <td>30 estudiantes</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="modulo-chip programacion-chip">Programación y Bases de Datos</span></td>
+                                    <td>Aplicación de Inventario</td>
+                                    <td>Grupo D</td>
+                                    <td>30 estudiantes</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="modulo-chip soporte-chip">Soporte Técnico</span></td>
+                                    <td>Sistema de Seguridad con Sensores</td>
+                                    <td>Grupo E</td>
+                                    <td>30 estudiantes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="especificaciones">
+                    <div class="especificacion-card redes">
+                        <h3 class="especificacion-title"><i class="fas fa-terminal"></i> Proyecto: Archivo BAT (Redes)</h3>
+                        <p>Los estudiantes desarrollarán un script de automatización en formato BAT para tareas de sistema operativo y redes.</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--azul-principal);">Requisitos del Proyecto:</h4>
+                        <ul class="requisitos-list">
+                            <li>Script debe realizar al menos 3 tareas diferentes</li>
+                            <li>Debe incluir manejo de parámetros</li>
+                            <li>Implementar estructuras de control (IF, FOR)</li>
+                            <li>Debe incluir comentarios explicativos</li>
+                            <li>Manejo de archivos y directorios</li>
+                            <li>Conexión a recursos de red</li>
+                        </ul>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--azul-principal);">Ejemplo de Código:</h4>
+                        <div class="codigo">
+                            <span class="codigo-comment">REM Script de automatización de red</span><br>
+                            <span class="codigo-comment">REM Por: Grupo de Redes</span><br><br>
+                            @echo off<br>
+                            <span class="codigo-comment">REM Verificar conexión a internet</span><br>
+                            <span class="codigo-keyword">ping</span> -n 1 google.com > nul<br>
+                            <span class="codigo-keyword">if</span> %errorlevel% <span class="codigo-keyword">equ</span> 0 (<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;echo Conexión a Internet: ACTIVA<br>
+                            ) <span class="codigo-keyword">else</span> (<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;echo Conexión a Internet: INACTIVA<br>
+                            )<br><br>
+                            <span class="codigo-comment">REM Listar recursos compartidos</span><br>
+                            net view<br><br>
+                            <span class="codigo-comment">REM Crear respaldo de configuración</span><br>
+                            mkdir C:\Respaldo_Red<br>
+                            ipconfig /all > C:\Respaldo_Red\config_red.txt
+                        </div>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--azul-principal);">Entregables:</h4>
+                        <ul class="requisitos-list">
+                            <li>Archivo BAT funcional</li>
+                            <li>Documentación de uso</li>
+                            <li>Diagrama de flujo del script</li>
+                            <li>Capturas de pantalla de ejecución</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="especificacion-card soporte">
+                        <h3 class="especificacion-title"><i class="fas fa-microchip"></i> Proyecto: Circuito Electrónico (Soporte)</h3>
+                        <p>Los estudiantes diseñarán e implementarán un circuito electrónico funcional con aplicación práctica.</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: #b28704;">Requisitos del Proyecto:</h4>
+                        <ul class="requisitos-list">
+                            <li>Diseño de circuito con aplicación práctica</li>
+                            <li>Lista completa de componentes</li>
+                            <li>Diagrama esquemático profesional</li>
+                            <li>Explicación del funcionamiento</li>
+                            <li>Pruebas de funcionamiento</li>
+                            <li>Medidas de seguridad implementadas</li>
+                        </ul>
+                        
+                        <h4 style="margin: 20px 0 10px; color: #b28704;">Ejemplo de Circuito:</h4>
+                        <div class="circuito-img">
+                            [Diagrama de Circuito de Control de Acceso]
+                        </div>
+                        
+                        <h4 style="margin: 20px 0 10px; color: #b28704;">Componentes Requeridos:</h4>
+                        <ul class="requisitos-list">
+                            <li>Arduino Uno</li>
+                            <li>Sensor de huella dactilar</li>
+                            <li>Módulo Relay</li>
+                            <li>Display LCD 16x2</li>
+                            <li>Buzzer activo</li>
+                            <li>LED indicadores</li>
+                            <li>Resistencias y cables</li>
+                        </ul>
+                        
+                        <h4 style="margin: 20px 0 10px; color: #b28704;">Entregables:</h4>
+                        <ul class="requisitos-list">
+                            <li>Circuito físico funcional</li>
+                            <li>Diagrama esquemático</li>
+                            <li>Manual de usuario</li>
+                            <li>Video demostrativo</li>
+                            <li>Análisis de posibles fallas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-file-alt"></i> Estructura General de Proyectos</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                        <div style="background: rgba(0, 86, 179, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid var(--azul-principal);">
+                            <h3 style="color: var(--azul-principal); margin-bottom: 15px; display: flex; align-items: center;">
+                                <i class="fas fa-book" style="margin-right: 10px;"></i> Portada
+                            </h3>
+                            <ul class="requisitos-list">
+                                <li>Título del proyecto</li>
+                                <li>Nombres de estudiantes</li>
+                                <li>Curso</li>
+                                <li>Nombre del docente</li>
+                                <li>Fecha</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: rgba(255, 215, 0, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid var(--amarillo-principal);">
+                            <h3 style="color: #b28704; margin-bottom: 15px; display: flex; align-items: center;">
+                                <i class="fas fa-camera" style="margin-right: 10px;"></i> Capturas
+                            </h3>
+                            <ul class="requisitos-list">
+                                <li>Funcionamiento del sistema</li>
+                                <li>Interfaz de usuario</li>
+                                <li>Resultados obtenidos</li>
+                                <li>Pruebas realizadas</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: rgba(40, 167, 69, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid #28a745;">
+                            <h3 style="color: #1e7e34; margin-bottom: 15px; display: flex; align-items: center;">
+                                <i class="fas fa-graduation-cap" style="margin-right: 10px;"></i> Conclusiones
+                            </h3>
+                            <ul class="requisitos-list">
+                                <li>¿Qué aprendí?</li>
+                                <li>¿Qué fue lo más difícil?</li>
+                                <li>¿Qué mejorarías?</li>
+                                <li>Aprendizajes clave</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</h2>
+                    <form id="proyectoForm" style="display: grid; gap: 20px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--azul-principal);">Módulo:</label>
+                            <select style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: var(--gris-claro);">
+                                <option value="programacion">Programación y Bases de Datos</option>
+                                <option value="soporte">Soporte Técnico</option>
+                                <option value="sistemas">Sistema Operativo y Redes</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--azul-principal);">Tema del Proyecto:</label>
+                            <input type="text" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" placeholder="Ingrese el tema del proyecto">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--azul-principal);">Grupo:</label>
+                            <input type="text" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;" placeholder="Nombre del grupo">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--azul-principal);">Estudiantes:</label>
+                            <input type="number" value="30" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" style="width:100%; margin-top:10px;">
+                            <i class="fas fa-save"></i> Guardar Proyecto
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-download"></i> Descargar Información</h2>
+                    <p style="margin-bottom: 20px;">Descargue las especificaciones de proyectos en formato Word para su revisión.</p>
+                    
+                    <div class="btn-container">
+                        <button class="btn btn-primary" id="descargarWord">
+                            <i class="fas fa-file-word"></i> Descargar en Word
+                        </button>
+                        <button class="btn btn-secondary" id="descargarPDF">
+                            <i class="fas fa-file-pdf"></i> Descargar PDF
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 30px; background: rgba(0, 86, 179, 0.05); padding: 20px; border-radius: 10px; border-left: 4px solid var(--azul-principal);">
+                        <h3 style="color: var(--azul-principal); margin-bottom: 15px; display: flex; align-items: center;">
+                            <i class="fas fa-info-circle" style="margin-right: 10px;"></i> Fechas Importantes
+                        </h3>
+                        <ul class="requisitos-list">
+                            <li>Presentación de propuestas: 15 de Octubre</li>
+                            <li>Entrega de avances: 5 de Noviembre</li>
+                            <li>Presentación final: 3 de Diciembre</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Docente TIC</h2>
+                    <div style="display: flex; align-items: center; gap: 20px; margin-top: 20px;">
+                        <div style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--amarillo-principal), var(--azul-principal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--azul-principal);">Prof. Carlos Mendoza</h3>
+                            <p style="margin-top: 5px;">Especialista en Tecnologías Educativas</p>
+                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                <div style="width: 30px; height: 30px; background: var(--azul-principal); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div style="width: 30px; height: 30px; background: var(--azul-principal); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 25px;">
+                        <h4 style="color: var(--azul-principal); margin-bottom: 15px; border-bottom: 2px solid var(--amarillo-principal); padding-bottom: 8px;">Módulos Impartidos</h4>
+                        <ul class="requisitos-list">
+                            <li>Programación y Bases de Datos</li>
+                            <li>Soporte Técnico</li>
+                            <li>Sistema Operativo y Redes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="modulos">
+                <div class="modulo">Programación y Bases de Datos</div>
+                <div class="modulo">Soporte Técnico</div>
+                <div class="modulo">Sistema Operativo y Redes</div>
+            </div>
+            <p class="copyright">© 2023 Unidad Educativa Dr. Camilo Gallegos Domínguez - Todos los derechos reservados</p>
+            <p class="copyright">Desarrollado por el Departamento de Tecnología e Informática</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simulación de descarga
+        document.getElementById('descargarWord').addEventListener('click', function() {
+            alert('Descargando documento Word con las especificaciones de proyectos...');
+        });
+        
+        document.getElementById('descargarPDF').addEventListener('click', function() {
+            alert('Descargando documento PDF con las especificaciones de proyectos...');
+        });
+        
+        // Animación al pasar el ratón sobre las tarjetas de especificaciones
+        const especCards = document.querySelectorAll('.especificacion-card');
+        especCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
