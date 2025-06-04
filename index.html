@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos TIC - Unidad Educativa Dr. Camilo Gallegos Domínguez</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.js"></script>
@@ -15,21 +16,24 @@
             --azul-principal: #0056b3;
             --azul-secundario: #007BFF;
             --blanco: #FFFFFF;
-            --gris-claro: #f5f5f5;
-            --gris-oscuro: #333333;
+            --gris-claro: #f8f9fa;
+            --gris-oscuro: #343a40;
+            --verde-aceptado: #28a745;
+            --rojo-rechazado: #dc3545;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
             background: linear-gradient(135deg, var(--azul-principal), #003366);
             color: var(--gris-oscuro);
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         .container {
@@ -50,6 +54,22 @@
             overflow: hidden;
         }
         
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"/></svg>');
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
         .sello-container {
             display: flex;
             justify-content: center;
@@ -67,13 +87,13 @@
             justify-content: center;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             position: relative;
-            animation: rotate 20s linear infinite;
+            animation: pulse 2s infinite;
         }
         
         .sello::before {
             content: "SELLO OFICIAL";
             position: absolute;
-            top: 0;
+            top: 10px;
             font-size: 12px;
             font-weight: bold;
             color: var(--azul-principal);
@@ -87,12 +107,19 @@
         }
         
         .institucion {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--blanco);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             margin: 15px 0;
-            font-weight: bold;
+            font-weight: 700;
             letter-spacing: 1px;
+        }
+        
+        .lema {
+            font-style: italic;
+            color: var(--blanco);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
         
         /* Main Content */
@@ -102,7 +129,7 @@
             gap: 25px;
         }
         
-        @media (min-width: 768px) {
+        @media (min-width: 992px) {
             .main-content {
                 grid-template-columns: 3fr 2fr;
             }
@@ -114,11 +141,23 @@
             padding: 25px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
         }
         
         .card-title {
@@ -139,41 +178,85 @@
         /* Matriz de Proyectos */
         .matriz {
             overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
+            font-size: 0.9rem;
         }
         
         th, td {
             padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #dee2e6;
         }
         
         th {
             background: var(--azul-principal);
             color: var(--blanco);
             font-weight: 600;
+            position: sticky;
+            top: 0;
         }
         
         tr:nth-child(even) {
-            background-color: var(--gris-claro);
+            background-color: rgba(0, 86, 179, 0.05);
         }
         
         tr:hover {
-            background-color: rgba(255, 215, 0, 0.1);
+            background-color: rgba(255, 215, 0, 0.15);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+        }
+        
+        .badge-primary {
+            color: #fff;
+            background-color: var(--azul-principal);
+        }
+        
+        .badge-success {
+            color: #fff;
+            background-color: var(--verde-aceptado);
+        }
+        
+        .badge-warning {
+            color: #212529;
+            background-color: var(--amarillo-principal);
+        }
+        
+        .badge-danger {
+            color: #fff;
+            background-color: var(--rojo-rechazado);
         }
         
         /* Estructura Proyecto */
         .estructura-item {
             margin-bottom: 20px;
-            padding: 15px;
+            padding: 20px;
             background: var(--gris-claro);
             border-radius: 10px;
             border-left: 4px solid var(--azul-principal);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .estructura-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .estructura-item h3 {
@@ -181,6 +264,7 @@
             margin-bottom: 10px;
             display: flex;
             align-items: center;
+            font-size: 1.2rem;
         }
         
         .estructura-item h3 i {
@@ -195,6 +279,16 @@
         
         .estructura-item ul li {
             margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .estructura-item ul li::before {
+            content: "•";
+            color: var(--amarillo-principal);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
         }
         
         .estructura-item pre {
@@ -205,6 +299,18 @@
             overflow-x: auto;
             margin: 10px 0;
             font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+        
+        .estructura-item .example {
+            background: rgba(0, 86, 179, 0.1);
+            border-left: 3px solid var(--azul-principal);
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
         }
         
         /* Botones */
@@ -226,6 +332,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
         }
         
         .btn i {
@@ -256,90 +382,404 @@
             box-shadow: 0 6px 12px rgba(255, 215, 0, 0.4);
         }
         
+        /* Formularios */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--amarillo-principal);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
         /* Footer */
         footer {
             background: linear-gradient(90deg, var(--azul-principal), #002147);
             color: var(--blanco);
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             border-radius: 20px 20px 0 0;
             margin-top: 40px;
             box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
         }
         
         .modulos {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 20px;
-            margin: 15px 0;
+            gap: 15px;
+            margin: 20px 0;
         }
         
         .modulo {
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
+            padding: 8px 20px;
             border-radius: 30px;
             font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .modulo:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--amarillo-principal);
+            color: var(--gris-oscuro);
+            transform: translateY(-3px);
         }
         
         /* Animaciones */
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
         
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .institucion {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
             
             .card {
-                padding: 15px;
+                padding: 20px;
             }
             
             .btn {
                 padding: 10px 20px;
                 font-size: 0.9rem;
+                width: 100%;
             }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .modulos {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+            margin: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--amarillo-principal);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--azul-principal);
+            border: 3px solid var(--amarillo-principal);
+        }
+        
+        .timeline-date {
+            font-weight: 600;
+            color: var(--azul-principal);
+            margin-bottom: 5px;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--gris-oscuro);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--amarillo-principal);
+            color: var(--azul-principal);
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="sello-container">
-                <div class="sello pulse">
-                    <div>sello.jpg</div>
+            <div class="header-wave"></div>
+            <div class="header-content">
+                <div class="sello-container">
+                    <div class="sello">
+                        <i class="fas fa-school" style="font-size: 3rem; color: var(--azul-principal);"></i>
+                    </div>
                 </div>
+                <h1 class="institucion">UNIDAD EDUCATIVA<br>DR. CAMILO GALLEGOS DOMÍNGUEZ</h1>
+                <p class="lema">"Excelencia educativa con visión tecnológica"</p>
             </div>
-            <h1 class="institucion">UNIDAD EDUCATIVA DR. CAMILO GALLEGOS DOMÍNGUEZ</h1>
         </header>
         
         <div class="main-content">
             <div>
-                <div class="card">
+                <div class="card fade-in">
                     <h2 class="card-title"><i class="fas fa-project-diagram"></i> Matriz de Proyectos por Módulo</h2>
-                    <div class="matriz">
-
-
-
-
-
-
-                        
+                    
+                    <div class="tabs">
+                        <div class="tab active" data-tab="programacion">Programación</div>
+                        <div class="tab" data-tab="soporte">Soporte</div>
+                        <div class="tab" data-tab="sistemas">Sistemas</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="programacion">
+                        <div class="matriz">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Módulo</th>
+                                        <th>Proyecto</th>
+                                        <th>Grupo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Entrega</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Programación</td>
+                                        <td>Sistema de Gestión Escolar</td>
+                                        <td>Grupo A</td>
+                                        <td><span class="badge badge-success">Aprobado</span></td>
+                                        <td>15/06/2023</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Programación</td>
+                                        <td>Calculadora Científica</td>
+                                        <td>Grupo B</td>
+                                        <td><span class="badge badge-warning">En Revisión</span></td>
+                                        <td>20/06/2023</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Programación</td>
+                                        <td>Juego Educativo</td>
+                                        <td>Grupo C</td>
+                                        <td><span class="badge badge-primary">En Progreso</span></td>
+                                        <td>25/06/2023</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Programación</td>
+                                        <td>Sistema de Biblioteca</td>
+                                        <td>Grupo D</td>
+                                        <td><span class="badge badge-danger">Rechazado</span></td>
+                                        <td>10/06/2023</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="soporte">
+                        <div class="matriz">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Módulo</th>
+                                        <th>Proyecto</th>
+                                        <th>Grupo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Entrega</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Soporte Técnico</td>
+                                        <td>Manual de Mantenimiento</td>
+                                        <td>Grupo E</td>
+                                        <td><span class="badge badge-success">Aprobado</span></td>
+                                        <td>18/06/2023</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="sistemas">
+                        <div class="matriz">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Módulo</th>
+                                        <th>Proyecto</th>
+                                        <th>Grupo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha Entrega</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sistemas Operativos</td>
+                                        <td>Guía de Comandos Linux</td>
+                                        <td>Grupo F</td>
+                                        <td><span class="badge badge-primary">En Progreso</span></td>
+                                        <td>22/06/2023</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 65%;"></div>
+                    </div>
+                    <p style="text-align: center; font-size: 0.9rem;">Progreso general de proyectos: 65% completado</p>
+                </div>
                 
-                
+                <div class="card fade-in" style="animation-delay: 0.2s;">
+                    <h2 class="card-title"><i class="fas fa-book"></i> Estructura para Presentación de Proyectos</h2>
+                    
                     <div class="estructura-item">
                         <h3><i class="fas fa-book"></i> 1. Portada del Proyecto</h3>
                         <p>Debe contener:</p>
@@ -350,6 +790,9 @@
                             <li>Nombre del docente</li>
                             <li>Fecha</li>
                         </ul>
+                        <div class="example">
+                            <strong>Ejemplo:</strong> "Sistema de Gestión de Notas - Programación Orientada a Objetos - 3ro BGU - Prof. Juan Pérez - 15/06/2023"
+                        </div>
                     </div>
                     
                     <div class="estructura-item">
@@ -360,19 +803,27 @@
                             <li>¿Qué problema resuelve?</li>
                             <li>¿Qué tipo de usuario lo usaría?</li>
                         </ul>
-                        <p>Ejemplo:</p>
-                        <p><em>"Este sistema permite registrar estudiantes con su nombre, edad y nota final. Luego se pueden listar todos los estudiantes registrados y ver si aprueban o no."</em></p>
+                        <div class="example">
+                            <strong>Ejemplo:</strong> "Este sistema permite registrar estudiantes con su nombre, edad y nota final. Los profesores pueden ingresar las calificaciones y el sistema calcula automáticamente si el estudiante aprueba o reprueba según el promedio establecido."
+                        </div>
                     </div>
                     
                     <div class="estructura-item">
                         <h3><i class="fas fa-tasks"></i> 3. Requisitos Funcionales</h3>
                         <p>Explicar al menos 3 o 4 funcionalidades clave:</p>
                         <ul>
-                            <li>Agregar datos</li>
-                            <li>Mostrar datos</li>
-                            <li>Buscar o eliminar datos</li>
+                            <li>Agregar datos (estudiantes, productos, etc.)</li>
+                            <li>Mostrar datos registrados</li>
+                            <li>Buscar o eliminar datos específicos</li>
                             <li>Evaluar condiciones (aprobado/reprobado, stock bajo, etc.)</li>
                         </ul>
+                        <div class="example">
+                            <strong>Ejemplo de requisitos:</strong><br>
+                            1. Registrar nuevos estudiantes con nombre, edad y calificaciones<br>
+                            2. Mostrar lista completa de estudiantes registrados<br>
+                            3. Buscar estudiante por nombre o ID<br>
+                            4. Calcular y mostrar promedio de calificaciones
+                        </div>
                     </div>
                     
                     <div class="estructura-item">
@@ -383,16 +834,40 @@
                             <li>Uso de estructuras básicas: if, while, switch, ArrayList, etc.</li>
                             <li>Comentarios que expliquen las secciones del código</li>
                         </ul>
+                        <pre>
+// Ejemplo de código estructurado
+public class Estudiante {
+    private String nombre;
+    private double[] notas;
+    
+    // Constructor
+    public Estudiante(String nombre, double[] notas) {
+        this.nombre = nombre;
+        this.notas = notas;
+    }
+    
+    // Método para calcular promedio
+    public double calcularPromedio() {
+        double suma = 0;
+        for(double nota : notas) {
+            suma += nota;
+        }
+        return suma / notas.length;
+    }
+}</pre>
                     </div>
                     
                     <div class="estructura-item">
                         <h3><i class="fas fa-bars"></i> 5. Menú Principal del Programa</h3>
                         <p>Usar consola para mostrar opciones:</p>
                         <pre>
+=== MENÚ PRINCIPAL ===
 1. Agregar estudiante
 2. Ver estudiantes
 3. Ver aprobados
-4. Salir</pre>
+4. Buscar estudiante
+5. Salir
+Seleccione una opción:</pre>
                         <p>Y usar un bucle while o do-while con switch para el control.</p>
                     </div>
                     
@@ -400,31 +875,40 @@
                         <h3><i class="fas fa-camera"></i> 6. Capturas de Pantalla</h3>
                         <p>Pueden hacer pruebas y capturar los resultados de:</p>
                         <ul>
-                            <li>Insertar datos</li>
-                            <li>Visualizar datos</li>
-                            <li>Ver condiciones (aprobados, reprobados, etc.)</li>
+                            <li>Insertar datos (registro de estudiantes, productos, etc.)</li>
+                            <li>Visualizar datos (listados completos o búsquedas)</li>
+                            <li>Ver condiciones (aprobados, reprobados, stock bajo, etc.)</li>
+                            <li>Mensajes de confirmación o error</li>
                         </ul>
                     </div>
                     
                     <div class="estructura-item">
                         <h3><i class="fas fa-graduation-cap"></i> 7. Conclusiones</h3>
-                        <p>Cada integrante debe escribir una conclusión:</p>
+                        <p>Cada integrante debe escribir una conclusión personal:</p>
                         <ul>
-                            <li>¿Qué aprendí?</li>
-                            <li>¿Qué fue lo más difícil?</li>
-                            <li>¿Qué mejorarías?</li>
+                            <li>¿Qué aprendí durante el desarrollo del proyecto?</li>
+                            <li>¿Qué fue lo más difícil y cómo lo superé?</li>
+                            <li>¿Qué mejoras implementaría en una próxima versión?</li>
+                            <li>¿Cómo contribuí al trabajo en equipo?</li>
                         </ul>
+                    </div>
+                    
+                    <div class="btn-container">
+                        <a href="Soporte_Sistema.html" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> Ver Proyecto Ejemplo
+                        </a>
                     </div>
                 </div>
             </div>
-             <a href="Soporte_Sistema.html">Proyecto SOPORTE_SISTEMA</a>
+            
             <div>
-                <div class="card">
+                <div class="card fade-in" style="animation-delay: 0.4s;">
                     <h2 class="card-title"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</h2>
                     <form id="proyectoForm">
                         <div class="form-group">
                             <label for="modulo">Módulo:</label>
-                            <select id="modulo" class="form-control">
+                            <select id="modulo" class="form-control" required>
+                                <option value="" disabled selected>Seleccione un módulo</option>
                                 <option value="programacion">Programación y Bases de Datos</option>
                                 <option value="soporte">Soporte Técnico</option>
                                 <option value="sistemas">Sistema Operativo y Redes</option>
@@ -433,100 +917,208 @@
                         
                         <div class="form-group">
                             <label for="tema">Tema del Proyecto:</label>
-                            <input type="text" id="tema" class="form-control" placeholder="Ingrese el tema del proyecto">
+                            <input type="text" id="tema" class="form-control" placeholder="Ingrese el tema del proyecto" required>
                         </div>
                         
                         <div class="form-group">
                             <label for="grupo">Grupo:</label>
-                            <input type="text" id="grupo" class="form-control" placeholder="Nombre del grupo">
+                            <input type="text" id="grupo" class="form-control" placeholder="Nombre del grupo" required>
                         </div>
                         
                         <div class="form-group">
-                            <label>Estudiantes: 30</label>
+                            <label for="estudiantes">Número de Estudiantes:</label>
+                            <input type="number" id="estudiantes" class="form-control" min="1" max="5" value="3" required>
                         </div>
                         
-                        <button type="button" class="btn btn-secondary" style="width:100%; margin-top:20px;">
+                        <div class="form-group">
+                            <label for="fecha">Fecha de Entrega:</label>
+                            <input type="date" id="fecha" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-secondary" style="width:100%; margin-top:20px;">
                             <i class="fas fa-save"></i> Guardar Proyecto
                         </button>
                     </form>
                 </div>
                 
-                <div class="card">
-                    <h2 class="card-title"><i class="fas fa-download"></i> Descargar Información</h2>
-                    <p>Descargue la matriz de proyectos y la estructura de presentación en formato Word para su revisión.</p>
+                <div class="card fade-in" style="animation-delay: 0.6s;">
+                    <h2 class="card-title"><i class="fas fa-download"></i> Descargar Recursos</h2>
+                    <p>Descargue la matriz de proyectos y la estructura de presentación en diferentes formatos.</p>
                     
                     <div class="btn-container">
                         <button class="btn btn-primary" id="descargarWord">
-                            <i class="fas fa-file-word"></i> Descargar en Word
+                            <i class="fas fa-file-word"></i> Plantilla Word
                         </button>
                         <button class="btn btn-secondary" id="descargarPDF">
-                            <i class="fas fa-file-pdf"></i> Descargar PDF
+                            <i class="fas fa-file-pdf"></i> Guía en PDF
                         </button>
+                    </div>
+                    
+                    <div class="estructura-item" style="margin-top: 20px;">
+                        <h3><i class="fas fa-calendar-alt"></i> Cronograma de Entregas</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">10 Junio 2023</div>
+                                <p>Primera entrega: Descripción y requisitos</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">20 Junio 2023</div>
+                                <p>Segunda entrega: Código fuente inicial</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">30 Junio 2023</div>
+                                <p>Entrega final: Proyecto completo</p>
+                            </div>
+                        </div>
                     </div>
                     
                     <div style="margin-top: 25px; background: var(--gris-claro); padding: 15px; border-radius: 10px;">
                         <h3 style="color: var(--azul-principal); margin-bottom: 10px;">
                             <i class="fas fa-info-circle"></i> Importante
                         </h3>
-                        <p>Todos los proyectos deben seguir la estructura indicada y ser entregados en la fecha establecida.</p>
+                        <p>Todos los proyectos deben seguir la estructura indicada y ser entregados en la fecha establecida. Los proyectos tardíos tendrán penalización en la calificación.</p>
                     </div>
                 </div>
                 
-                <div class="card">
+                <div class="card fade-in" style="animation-delay: 0.8s;">
                     <h2 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Docente TIC</h2>
                     <div style="display: flex; align-items: center; gap: 15px; margin-top: 20px;">
-                        <div style="width: 80px; height: 80px; background: var(--amarillo-principal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
-                            <i class="fas fa-user"></i>
+                        <div style="width: 100px; height: 100px; background: var(--amarillo-principal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--azul-principal);">
+                            <i class="fas fa-user-tie"></i>
                         </div>
                         <div>
-                            <h3 style="color: var(--azul-principal);">Profesor de TIC</h3>
-                            <p>Módulos impartidos:</p>
-                            <ul>
-                                <li>Programación y Bases de Datos</li>
-                                <li>Soporte Técnico</li>
-                                <li>Sistema Operativo y Redes</li>
-                            </ul>
+                            <h3 style="color: var(--azul-principal);">Ing. Carlos Martínez</h3>
+                            <p>Profesor de Tecnologías de la Información</p>
+                            <p><i class="fas fa-envelope"></i> cmartinez@uecgd.edu.ec</p>
+                            <p><i class="fas fa-phone"></i> 02 1234 567</p>
                         </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h3 style="color: var(--azul-principal); margin-bottom: 10px;">
+                            <i class="fas fa-book-open"></i> Módulos Impartidos
+                        </h3>
+                        <ul>
+                            <li><strong>Programación y Bases de Datos:</strong> Lunes y Miércoles 8:00-10:00</li>
+                            <li><strong>Soporte Técnico:</strong> Martes y Jueves 10:00-12:00</li>
+                            <li><strong>Sistema Operativo y Redes:</strong> Viernes 8:00-12:00</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="btn-container" style="margin-top: 20px;">
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-calendar-check"></i> Agendar Tutoría
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
         
-        <footer>
+        <footer class="fade-in" style="animation-delay: 1s;">
             <div class="modulos">
-                <div class="modulo">Programación y Bases de Datos</div>
-                <div class="modulo">Soporte Técnico</div>
-                <div class="modulo">Sistema Operativo y Redes</div>
+                <div class="modulo"><i class="fas fa-code"></i> Programación y Bases de Datos</div>
+                <div class="modulo"><i class="fas fa-tools"></i> Soporte Técnico</div>
+                <div class="modulo"><i class="fas fa-network-wired"></i> Sistema Operativo y Redes</div>
             </div>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+            
             <p>© 2023 Unidad Educativa Dr. Camilo Gallegos Domínguez - Todos los derechos reservados</p>
             <p>Desarrollado por el Departamento de Tecnología e Informática</p>
         </footer>
     </div>
 
     <script>
-        // Simulación de descarga
-        document.getElementById('descargarWord').addEventListener('click', function() {
-            alert('La función de descarga en Word se ha activado. En una implementación real, se generaría un documento Word con toda la información mostrada.');
-        });
-        
-        document.getElementById('descargarPDF').addEventListener('click', function() {
-            alert('La función de descarga en PDF se ha activado. En una implementación real, se generaría un documento PDF con toda la información mostrada.');
-        });
-        
-        // Animación al pasar el ratón sobre las filas de la tabla
-        const filas = document.querySelectorAll('table tbody tr');
-        filas.forEach(fila => {
-            fila.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.02)';
-                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+        // Animación de carga para la barra de progreso
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.querySelector('.progress-bar');
+            progressBar.style.width = '65%';
+            
+            // Efecto de tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remover clase active de todos los tabs y contenidos
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // Agregar clase active al tab clickeado
+                    this.classList.add('active');
+                    
+                    // Mostrar el contenido correspondiente
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
             });
             
-            fila.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-                this.style.boxShadow = 'none';
+            // Validación de formulario
+            const form = document.getElementById('proyectoForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const modulo = document.getElementById('modulo').value;
+                const tema = document.getElementById('tema').value;
+                const grupo = document.getElementById('grupo').value;
+                
+                if(!modulo || !tema || !grupo) {
+                    alert('Por favor complete todos los campos requeridos');
+                    return;
+                }
+                
+                alert(`Proyecto "${tema}" para el módulo de ${modulo} registrado exitosamente para el grupo ${grupo}.`);
+                form.reset();
+            });
+            
+            // Simulación de descarga
+            document.getElementById('descargarWord').addEventListener('click', function() {
+                alert('Descargando plantilla en formato Word...');
+                // En una implementación real, aquí se generaría el documento Word
+            });
+            
+            document.getElementById('descargarPDF').addEventListener('click', function() {
+                alert('Descargando guía en formato PDF...');
+                // En una implementación real, aquí se generaría el documento PDF
+            });
+            
+            // Animación al pasar el ratón sobre las filas de la tabla
+            const filas = document.querySelectorAll('table tbody tr');
+            filas.forEach(fila => {
+                fila.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+                
+                fila.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            // Efecto ripple para botones
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const x = e.pageX - this.offsetLeft;
+                    const y = e.pageY - this.offsetTop;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 1000);
+                });
             });
         });
     </script>
-  
 </body>
 </html>
