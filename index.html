@@ -2,776 +2,615 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyectos TIC - Unidad Educativa Dr. Camilo Gallegos Domínguez</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Proyecto .BAT | Menú Interactivo - SO y Redes</title>
+    <!-- Fuentes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root {
-            --amarillo-principal: #FFD700;
-            --amarillo-secundario: #FFEC8B;
-            --azul-principal: #0056b3;
-            --azul-secundario: #007BFF;
-            --blanco: #FFFFFF;
-            --gris-claro: #f8f9fa;
-            --gris-oscuro: #343a40;
-            --verde-aceptado: #28a745;
-            --rojo-rechazado: #dc3545;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, var(--azul-principal), #003366);
-            color: var(--gris-oscuro);
-            line-height: 1.6;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe6e6 100%);
+            color: #1a1a2e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
         }
-        
-        .container {
-            max-width: 3200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Header Styles */
-        header {
-            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
-            border-radius: 0 0 20px 20px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 5px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 2;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .header-wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"/></svg>');
-            background-size: cover;
-            opacity: 0.15;
-        }
-        
-        .sello-container {
-            display: flex;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        
-        .sello {
-            width: 150px;
-            height: 150px;
-            background-color: var(--blanco);
-            border: 5px solid var(--amarillo-principal);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
-            position: relative;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-        }
-        
-        .sello:hover {
-            transform: rotate(10deg);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-        }
-        
-        .sello::before {
-            content: "SELLO OFICIAL";
-            position: absolute;
-            top: 10px;
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--azul-principal);
-            letter-spacing: 2px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sello img {
-            max-width: 80%;
-            max-height: 80%;
-            border-radius: 50%;
-        }
-        
-        .institucion {
-            font-size: 2rem;
-            color: var(--blanco);
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-            margin: 15px 0;
-            font-weight: 700;
-            letter-spacing: 1px;
-            line-height: 1.2;
-        }
-        
-        .lema {
-            font-style: italic;
-            color: var(--blanco);
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-            font-size: 1.1rem;
-            font-weight: 300;
-        }
-        
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-        
-        @media (min-width: 992px) {
-            .main-content {
-                grid-template-columns: 3fr 2fr;
-            }
-        }
-        
-        .card {
-            background: var(--blanco);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
-            transition: height 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        }
-        
-        .card:hover::after {
-            height: 8px;
-        }
-        
-        .card-title {
-            font-size: 1.5rem;
-            color: var(--azul-principal);
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid var(--amarillo-principal);
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        
-        .card-title::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--azul-principal);
-        }
-        
-        .card-title i {
-            margin-right: 15px;
-            color: var(--amarillo-principal);
-            font-size: 1.8rem;
-        }
-        
-        /* Matriz de Proyectos */
-        .matriz {
-            overflow-x: auto;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0;
-            font-size: 0.95rem;
-            min-width: 600px;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        th {
-            background: var(--azul-principal);
-            color: var(--blanco);
-            font-weight: 600;
+
+        /* Barra de navegación con colores vivos */
+        .navbar {
             position: sticky;
             top: 0;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-        
-        tr:nth-child(even) {
-            background-color: rgba(0, 86, 179, 0.05);
-        }
-        
-        tr:hover {
-            background-color: rgba(255, 215, 0, 0.15);
-            transform: scale(1.01);
-            transition: all 0.2s ease;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 0.4em 0.75em;
-            font-size: 0.75em;
-            font-weight: 700;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .badge-primary {
-            color: #fff;
-            background-color: var(--azul-principal);
-        }
-        
-        .badge-success {
-            color: #fff;
-            background-color: var(--verde-aceptado);
-        }
-        
-        .badge-warning {
-            color: #212529;
-            background-color: var(--amarillo-principal);
-        }
-        
-        .badge-danger {
-            color: #fff;
-            background-color: var(--rojo-rechazado);
-        }
-        
-        /* Estructura Proyecto */
-        .estructura-item {
-            margin-bottom: 25px;
-            padding: 25px;
-            background: var(--gris-claro);
-            border-radius: 10px;
-            border-left: 5px solid var(--azul-principal);
-            transition: all 0.3s ease;
-            position: relative;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .estructura-item:hover {
-            transform: translateX(8px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            background: white;
-        }
-        
-        .estructura-item h3 {
-            color: var(--azul-principal);
-            margin-bottom: 15px;
+            background: linear-gradient(135deg, #dc2626 0%, #2563eb 100%);
+            color: white;
+            padding: 1rem 2rem;
             display: flex;
-            align-items: center;
-            font-size: 1.25rem;
-        }
-        
-        .estructura-item h3 i {
-            margin-right: 15px;
-            color: var(--amarillo-principal);
-            font-size: 1.5rem;
-        }
-        
-        .estructura-item ul {
-            padding-left: 30px;
-            margin: 15px 0;
-        }
-        
-        .estructura-item ul li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 10px;
-        }
-        
-        .estructura-item ul li::before {
-            content: "•";
-            color: var(--amarillo-principal);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1.5em;
-            font-size: 1.2rem;
-        }
-        
-        .estructura-item pre {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            tab-size: 4;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-            border-left: 4px solid var(--amarillo-principal);
-        }
-        
-        .estructura-item .example {
-            background: rgba(0, 86, 179, 0.1);
-            border-left: 4px solid var(--azul-principal);
-            padding: 15px 20px;
-            margin: 15px 0;
-            border-radius: 0 8px 8px 0;
-            font-style: italic;
-            font-size: 0.95rem;
-        }
-        
-        /* Botones */
-        .btn-container {
-            display: flex;
-            gap: 20px;
             flex-wrap: wrap;
-            margin-top: 30px;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
-        
-        .btn {
-            padding: 14px 30px;
-            border: none;
+        .logo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+            background: #facc15;
+            padding: 0.3rem 1rem;
             border-radius: 50px;
-            font-size: 1rem;
+            color: #1e293b;
+        }
+        .logo i {
+            color: #dc2626;
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.2s;
+            padding: 0.5rem 0.8rem;
+            border-radius: 30px;
+        }
+        .nav-links a:hover {
+            background: #facc15;
+            color: #1e293b;
+            transform: scale(1.05);
+        }
+        @media (max-width: 700px) {
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Secciones estilo tarjeta con colores vivos */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            transition: all 0.2s;
+            border-top: 6px solid #facc15;
+            border-right: 2px solid #e2e8f0;
+            border-bottom: 2px solid #e2e8f0;
+            border-left: 2px solid #e2e8f0;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.2);
+        }
+        .card-header {
+            border-left: 6px solid #dc2626;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            gap: 10px;
         }
-        
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
+        .card-header h2 i {
+            color: #2563eb;
+            font-size: 1.6rem;
         }
-        
-        .btn:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.8rem 0;
+            color: #dc2626;
         }
-        
-        .btn i {
-            margin-right: 10px;
-            font-size: 1.1rem;
+        h4 {
+            font-weight: 600;
+            margin-top: 1rem;
+            color: #2563eb;
         }
-        
-        .btn-primary {
-            background: var(--azul-principal);
-            color: var(--blanco);
-            box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4);
+        p, li {
+            color: #334155;
         }
-        
-        .btn-primary:hover {
-            background: #004494;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.5);
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
         }
-        
-        .btn-secondary {
-            background: var(--amarillo-principal);
-            color: var(--gris-oscuro);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        .info-box {
+            background: linear-gradient(135deg, #fef9e3 0%, #fff3f0 100%);
+            border-radius: 1rem;
+            padding: 1rem;
+            border-left: 4px solid #facc15;
+            border-right: 1px solid #e2e8f0;
         }
-        
-        .btn-secondary:hover {
-            background: #e6c200;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
-        }
-        
-        /* Formularios */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 18px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: var(--amarillo-principal);
-            outline: 0;
-            box-shadow: 0 0 0 0.3rem rgba(255, 215, 0, 0.25);
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--azul-principal);
-        }
-        
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            background-color: #e9ecef;
-            border-radius: 8px;
-            margin: 20px 0;
-            height: 12px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .progress-bar {
-            height: 100%;
-            border-radius: 8px;
-            background: linear-gradient(90deg, var(--amarillo-principal), var(--azul-principal));
-            width: 0;
-            transition: width 1s ease-in-out;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.3) 100%);
-            animation: shine 2s infinite;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .institucion {
-                font-size: 1.6rem;
-            }
-            
-            .card {
-                padding: 25px;
-            }
-            
-            .btn {
-                padding: 12px 25px;
-                font-size: 0.95rem;
-                width: 100%;
-            }
-            
-            .btn-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .estructura-item {
-                padding: 20px;
-            }
-        }
-        
-        /* Animaciones */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 1;
-            }
-            20% {
-                transform: scale(25, 25);
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: scale(40, 40);
-            }
-        }
-        
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
-        
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 220px;
-            background-color: var(--gris-oscuro);
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
+        pre {
+            background: #1e1e2f;
+            color: #facc15;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
             font-size: 0.85rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border-left: 5px solid #dc2626;
         }
-        
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Tabs */
-        .tabs {
-            display: flex;
-            border-bottom: 2px solid #dee2e6;
-            margin-bottom: 25px;
-        }
-        
-        .tab {
-            padding: 12px 25px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            font-weight: 500;
-            color: var(--gris-oscuro);
-            position: relative;
-        }
-        
-        .tab.active {
-            border-bottom: 3px solid var(--amarillo-principal);
-            color: var(--azul-principal);
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #fef9c3;
+            padding: 0.2rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #dc2626;
             font-weight: 600;
         }
-        
-        .tab:hover:not(.active) {
-            background: rgba(0, 86, 179, 0.05);
+        .menu-preview {
+            background: #1a1a2e;
+            color: #facc15;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            font-family: monospace;
+            font-weight: 500;
+            line-height: 1.7;
+            border: 2px solid #dc2626;
         }
-        
-        .tab-content {
-            display: none;
+        .capture-placeholder {
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef9c3 100%);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px dashed #2563eb;
+            color: #1e293b;
+            margin: 1rem 0;
         }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        footer {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #facc15;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 2rem 2rem 0 0;
+            font-size: 0.85rem;
+        }
+        .badge {
+            background: #dc2626;
+            color: #facc15;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        hr {
+            margin: 1rem 0;
+            border-color: #facc15;
+        }
+        /* Estilos para metacognición */
+        .metacog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .metacog-card {
+            background: linear-gradient(135deg, #fef9e3 0%, #ffe6e6 100%);
+            border-left: 5px solid #dc2626;
+            padding: 1.2rem;
+            border-radius: 1rem;
+            transition: transform 0.2s;
+        }
+        .metacog-card h3 {
+            margin-top: 0;
+            color: #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .metacog-card p, .metacog-card ul {
+            margin-top: 0.5rem;
+            color: #1e293b;
+        }
+        .metacog-card ul {
+            padding-left: 1.2rem;
+        }
+        .key-learning {
+            background: linear-gradient(135deg, #dbeafe 0%, #fef9c3 100%);
+            border-left-color: #2563eb;
+        }
+        /* Sello institucional */
+        .institution-seal {
+            background: linear-gradient(135deg, #dc2626 0%, #2563eb 100%);
+            border-radius: 100px 100px 50px 50px;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .seal-icon {
+            font-size: 4rem;
+            color: #facc15;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .seal-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #facc15;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .seal-sub {
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .btn-volor {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+        @media (max-width: 640px) {
+            .card {
+                padding: 1.2rem;
+            }
+            .card-header h2 {
+                font-size: 1.4rem;
+            }
+            .seal-text {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    
-        <header>
-            <div class="header-wave"></div>
-            <div class="header-content">
-                <div class="sello-container">
-                    <div class="sello">
-                        <img src="sello.jpg" alt="Descripción de la imagen">
-                    </div>
-                </div>
-                <h1 class="institucion">UNIDAD EDUCATIVA<br>DR. CAMILO GALLEGOS DOMÍNGUEZ</h1>
-                <p class="lema">"Excelencia educativa con visión tecnológica"</p>
-            </div>
-        </header>
-        
-        
-                    <div class="card fade-in">
-                        <h2 class="card-title"><i class="fas fa-project-diagram"></i> Matriz de Proyectos por Módulo</h2>
-                       <h2 class="card-title">
-                              <i class="fas fa-project-diagram"></i>
-                              <a href="Soporte_Sistema.html" style="text-decoration: none; color: inherit;">
-                                Módulos: Soporte Técnico - Sistema Operativo y Redes
-                               </a>
-                        </h2>
 
-                        <div class="tabs">
-                            <h1>MÓDULO: PROGRAMACIÓN Y BASES DE DATOS</h1>
-                        </div>
-                        
-                    
-                    
-                    <div class="card fade-in" style="animation-delay: 0.2s;">
-                        <h2 class="card-title"><i class="fas fa-book"></i> Estructura para Presentación de Proyectos</h2>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-book"></i> 1. Portada del Proyecto</h3>
-                            <p>Debe contener:</p>
-                            <ul>
-                                <li>Título del proyecto</li>
-                                <li>Nombres de los estudiantes</li>
-                                <li>Curso</li>
-                                <li>Nombre del docente</li>
-                                <li>Fecha</li>
-                            </ul>
-                            <div class="example">
-                                <strong>Ejemplo:</strong> "Sistema de Gestión de Notas - Programación Orientada a Objetos - 3ro BGU - Prof. Juan Pérez - 15/06/2023"
-                            </div>
-                        </div>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-file-signature"></i> 2. Descripción del Proyecto</h3>
-                            <p>Breve explicación del sistema:</p>
-                            <ul>
-                                <li>¿Qué hace?</li>
-                                <li>¿Qué problema resuelve?</li>
-                                <li>¿Qué tipo de usuario lo usaría?</li>
-                            </ul>
-                            <div class="example">
-                                <strong>Ejemplo:</strong> "Este sistema permite registrar estudiantes con su nombre, edad y nota final. Los profesores pueden ingresar las calificaciones y el sistema calcula automáticamente si el estudiante aprueba o reprueba según el promedio establecido."
-                            </div>
-                        </div>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-tasks"></i> 3. Requisitos Funcionales</h3>
-                            <p>Explicar al menos 3 o 4 funcionalidades clave:</p>
-                            <ul>
-                                <li>Agregar datos (estudiantes, productos, etc.)</li>
-                                <li>Mostrar datos registrados</li>
-                                <li>Buscar o eliminar datos específicos</li>
-                                <li>Evaluar condiciones (aprobado/reprobado, stock bajo, etc.)</li>
-                            </ul>
-                            <div class="example">
-                                <strong>Ejemplo de requisitos:</strong><br>
-                                1. Registrar nuevos estudiantes con nombre, edad y calificaciones<br>
-                                2. Mostrar lista completa de estudiantes registrados<br>
-                                3. Buscar estudiante por nombre o ID<br>
-                                4. Calcular y mostrar promedio de calificaciones
-                            </div>
-                        </div>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-code"></i> 4. Código Fuente</h3>
-                            <p>Deben presentar:</p>
-                            <ul>
-                                <li>Estructura del código Java dividida en clases si es posible</li>
-                                <li>Uso de estructuras básicas: if, while, switch, ArrayList, etc.</li>
-                                <li>Comentarios que expliquen las secciones del código</li>
-                            </ul>
-                            <pre>
-// Ejemplo de código estructurado
-public class Estudiante {
-    private String nombre;
-    private double[] notas;
-    
-    // Constructor
-    public Estudiante(String nombre, double[] notas) {
-        this.nombre = nombre;
-        this.notas = notas;
-    }
-    
-    // Método para calcular promedio
-    public double calcularPromedio() {
-        double suma = 0;
-        for(double nota : notas) {
-            suma += nota;
-        }
-        return suma / notas.length;
-    }
-}</pre>
-                        </div>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-bars"></i> 5. Menú Principal del Programa</h3>
-                            <p>Usar consola para mostrar opciones:</p>
-                            <pre>
-=== MENÚ PRINCIPAL ===
-1. Agregar estudiante
-2. Ver estudiantes
-3. Ver aprobados
-4. Buscar estudiante
-5. Salir
-Seleccione una opción:</pre>
-                            <p>Y usar un estructura switch para el control de opciones minima 3 opciones y una cuarta opciòn de Salir.</p>
-                        </div>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-camera"></i> 6. Capturas de Pantalla</h3>
-                            <p>Pueden hacer pruebas y capturar los resultados de:</p>
-                            <ul>
-                                <li>Insertar datos (registro de estudiantes, productos, etc.)</li>
-                                <li>Visualizar datos (listados completos o búsquedas)</li>
-                                <li>Ver condiciones (aprobados, reprobados, stock bajo, etc.)</li>
-                                <li>Mensajes de confirmación o error</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="estructura-item">
-                            <h3><i class="fas fa-graduation-cap"></i> 7. Conclusiones</h3>
-                            <p>Cada integrante debe escribir una conclusión personal:</p>
-                            <ul>
-                                <li>¿Qué aprendí durante el desarrollo del proyecto?</li>
-                                <li>¿Qué fue lo más difícil y cómo lo superé?</li>
-                                <li>¿Qué mejoras implementaría en una próxima versión?</li>
-                                <li>¿Cómo contribuí al trabajo en equipo?</li>
-                            </ul>
-                        </div>
-                    </div>
+<nav class="navbar">
+    <div class="logo"><i class="fas fa-terminal"></i> BatchProject · SO & Redes</div>
+    <div class="nav-links">
+        <a href="#portada">Inicio</a>
+        <a href="#intro">Introducción</a>
+        <a href="#objetivos">Objetivos</a>
+        <a href="#justificacion">Justificación</a>
+        <a href="#marco">Marco Teórico</a>
+        <a href="#diseno">Diseño</a>
+        <a href="#codigo">Código</a>
+        <a href="#pruebas">Pruebas</a>
+        <a href="#conclusiones">Conclusiones</a>
+        <a href="#metacognicion">Metacognición</a>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- 1. PORTADA con sello institucional -->
+    <section id="portada">
+        <div class="card" style="text-align: center; background: linear-gradient(135deg, #ffffff 0%, #fff9e6 100%);">
+            <!-- SELLO DE LA INSTITUCIÓN -->
+            <div class="institution-seal">
+                <i class="fas fa-graduation-cap seal-icon"></i>
+                <div class="seal-text">UNIDAD EDUCATIVA</div>
+                <div class="seal-text" style="font-size: 1.6rem;">DR. CAMILO GALLEGOS DOMINGUEZ</div>
+                <div class="seal-sub"><i class="fas fa-star-of-life"></i> Excelencia Académica - Compromiso Social <i class="fas fa-star-of-life"></i></div>
+            </div>
+            <i class="fas fa-code-branch" style="font-size: 3rem; color: #dc2626; margin-top: 1rem;"></i>
+            <h1 style="font-size: 2.5rem; margin: 0.5rem 0; color: #2563eb;">PROYECTO: ARCHIVO .BAT CON MENÚ INTERACTIVO</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #dc2626; font-weight: 600;">Automatización de tareas en Sistemas Operativos y Redes</p>
+            <hr style="width: 80px; margin: 1rem auto; border: 2px solid #facc15;">
+            <p><strong>Estudiante:</strong></p>
+            <p><strong>Curso y paralelo:</strong> 3ro "____" - Redes y Sistemas Operativos</p>
+            <p><strong>Docente:</strong>Mgs. Maricela Cun Rueda</p>
+            <p><strong>Fecha:</strong> 3 de junio de 2026</p>
+            <div class="badge" style="margin-top: 1rem;"><i class="fas fa-microchip"></i> Scripting avanzado en Windows</div>
+        </div>
+    </section>
+
+    <!-- 2. INTRODUCCIÓN -->
+    <section id="intro">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-book-open"></i> Introducción</h2>
+            </div>
+            <p>El presente proyecto consiste en el desarrollo de un <strong>archivo por lotes (.BAT)</strong> que implementa un <strong>menú interactivo</strong> para automatizar tareas comunes en entornos Windows, orientado a la asignatura de Sistemas Operativos y Redes. Los archivos .BAT permiten ejecutar comandos del sistema de forma secuencial, y al integrar un menú con opciones (información del sistema, gestión de procesos, pruebas de red, etc.) se optimiza la administración básica del equipo.</p>
+            <p>La automatización mediante menús facilita el trabajo a técnicos y usuarios finales, reduciendo errores y ahorrando tiempo en tareas repetitivas. Este proyecto demuestra cómo estructuras condicionales, bucles y comandos de red pueden organizarse en una solución funcional y educativa.</p>
+        </div>
+    </section>
+
+    <!-- 3. OBJETIVOS -->
+    <section id="objetivos">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-bullseye"></i> Objetivos</h2>
+            </div>
+            <h3>Objetivo General</h3>
+            <p>Diseñar e implementar un script en formato .BAT con un sistema de menú interactivo que permita ejecutar tareas de administración del sistema operativo y diagnóstico de redes, aplicando estructuras de control y bucles.</p>
+            
+        </div>
+    </section>
+
+    <!-- 4. JUSTIFICACIÓN -->
+    <section id="justificacion">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-chalkboard-user"></i> Justificación</h2>
+            </div>
+            <p>En el ámbito de soporte técnico y administración de redes, gran parte de los diagnósticos iniciales se realizan con comandos de consola. Un archivo .BAT con menú <strong>unifica y simplifica</strong> estas tareas, siendo accesible incluso para usuarios con conocimientos básicos. Además, el proyecto responde a la necesidad de aplicar teoría de sistemas operativos (gestión de procesos, información del sistema) y redes (ping, configuración IP) en una herramienta práctica.</p>
+            <div class="info-box"><i class="fas fa-lightbulb" style="color: #facc15;"></i> <strong>Valor educativo:</strong> Permite comprender cómo funciona el intérprete de comandos, la lógica de bifurcaciones y la reutilización de código batch.</div>
+        </div>
+    </section>
+
+    <!-- 5. MARCO TEÓRICO -->
+    <section id="marco">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-flask"></i> Marco Teórico</h2>
+            </div>
+            <div class="grid-2">
+                <div class="info-box"><strong><i class="fas fa-file-alt" style="color:#dc2626"></i> Archivo .BAT</strong><br>Archivo de texto con extensión .bat o .cmd que contiene comandos ejecutables por el intérprete de comandos de Windows (cmd.exe).</div>
+                <div class="info-box"><strong><i class="fas fa-terminal" style="color:#2563eb"></i> Comandos comunes</strong><br><code>ECHO</code>, <code>PAUSE</code>, <code>CLS</code>, <code>SET</code>, <code>IPCONFIG</code>, <code>PING</code>, <code>TASKLIST</code>, <code>SYSTEMINFO</code>.</div>
+                <div class="info-box"><strong><i class="fas fa-code-branch" style="color:#facc15"></i> Estructuras condicionales</strong><br><code>IF EXIST</code>, <code>IF %var%==valor</code>. Permiten tomar decisiones.</div>
+                <div class="info-box"><strong><i class="fas fa-sync-alt" style="color:#dc2626"></i> Estructuras repetitivas</strong><br>Mediante etiquetas <code>:INICIO</code> y el comando <code>GOTO</code> se crean bucles.</div>
+                <div class="info-box"><strong><i class="fas fa-list-ul" style="color:#2563eb"></i> Menús interactivos</strong><br>Se despliegan opciones numeradas, se captura la entrada del usuario con <code>SET /P opcion=</code> y se evalúa con condicionales.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ANÁLISIS DEL PROBLEMA -->
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-search"></i> Análisis del Problema</h2>
+            </div>
+            <p>Los técnicos y estudiantes a menudo necesitan ejecutar múltiples comandos de diagnóstico de forma aislada, perdiendo tiempo. El programa resuelve: <strong>falta de integración, errores de sintaxis y demoras</strong>, centralizando la información del sistema en una sola interfaz.</p>
+        </div>
+    </section>
+
+    <!-- 7. DISEÑO DEL PROYECTO -->
+    <section id="diseno">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-sitemap"></i> Diseño del Proyecto</h2>
+            </div>
+            <p><strong>Nombre del sistema:</strong> <code>SysRedMenu.bat</code> – "Consola de administración SO & Redes"</p>
+            <p><strong>Descripción general:</strong> Script que muestra un menú con 5 opciones (4 herramientas + salida).</p>
+            <h3>Estructura del menú principal</h3>
+            <div class="menu-preview">
+                ╔════════════════════════════════════════╗<br>
+                ║      MENÚ PRINCIPAL - SISTEMA .BAT     ║<br>
+                ╠════════════════════════════════════════╣<br>
+                ║  1. Información completa del sistema   ║<br>
+                ║  2. Configuración IP (ipconfig /all)   ║<br>
+                ║  3. Prueba de conectividad (ping)      ║<br>
+                ║  4. Listar procesos activos (tasklist) ║<br>
+                ║  5. Salir del programa                 ║<br>
+                ╚════════════════════════════════════════╝
+            </div>
+            <h3>Diagrama de funcionamiento</h3>
+            <div class="capture-placeholder">
+                <i class="fas fa-diagram-project" style="font-size: 2rem; color:#2563eb"></i><br>
+                [INICIO] → Mostrar Menú → Leer opción → [1-4] Ejecutar comando → Volver menú → [5] Salir.
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. CÓDIGO FUENTE -->
+    <section id="codigo">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-code"></i> Desarrollo del Programa</h2>
+            </div>
+            <h3>Código fuente completo (SysRedMenu.bat) - 5 opciones</h3>
+            <pre><code>@echo off
+title Proyecto SO y Redes - Menú Interactivo
+color 0E
+:menu
+cls
+echo ==============================================
+echo        MENU PRINCIPAL - SISTEMA .BAT
+echo ==============================================
+echo  1. Informacion completa del sistema
+echo  2. Configuracion IP (ipconfig /all)
+echo  3. Prueba de conectividad (ping)
+echo  4. Listar procesos en ejecucion
+echo  5. SALIR
+echo ==============================================
+set /p opcion="Elija una opcion (1-5): "
+
+if "%opcion%"=="1" goto info_sistema
+if "%opcion%"=="2" goto ipconfig_all
+if "%opcion%"=="3" goto ping_tool
+if "%opcion%"=="4" goto tasklist_view
+if "%opcion%"=="5" goto salir
+echo Opcion no valida, intente de nuevo.
+timeout /t 2 >nul
+goto menu
+
+:info_sistema
+cls
+echo === INFORMACION DEL SISTEMA ===
+systeminfo | findstr /C:"Nombre de OS" /C:"Fabricante" /C:"Memoria" /C:"Procesador"
+echo.
+pause >nul
+goto menu
+
+:ipconfig_all
+cls
+ipconfig /all
+echo.
+pause
+goto menu
+
+:ping_tool
+cls
+set /p destino="Ingrese direccion IP o dominio: "
+ping %destino% -n 4
+pause
+goto menu
+
+:tasklist_view
+cls
+tasklist | more
+pause >nul
+goto menu
+
+:salir
+cls
+echo Gracias por usar el programa. Hasta luego!
+timeout /t 2 >nul
+exit</code></pre>
+            <h3>Explicación de módulos</h3>
+            <ul>
+                <li><code>:menu</code> → Bucle principal con opciones.</li>
+                <li><code>info_sistema</code> → Muestra información del SO.</li>
+                <li><code>ipconfig_all</code> → Configuración de red.</li>
+                <li><code>ping_tool</code> → Prueba de conectividad.</li>
+                <li><code>tasklist_view</code> → Lista procesos activos.</li>
+                <li><code>salir</code> → Finaliza el script.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 9. PRUEBAS -->
+    <section id="pruebas">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-vial"></i> Pruebas de Funcionamiento</h2>
+            </div>
+            <p>Se ejecutó el script en Windows 11:</p>
+            <ul>
+                <li><strong>Opción 1:</strong> Muestra OS, fabricante, procesador y memoria.</li>
+                <li><strong>Opción 2:</strong> ipconfig /all muestra IP, máscara, puerta enlace.</li>
+                <li><strong>Opción 3:</strong> Ping a google.com responde correctamente.</li>
+                <li><strong>Opción 4:</strong> Lista procesos con paginación.</li>
+                <li><strong>Opción 5:</strong> Sale sin errores.</li>
+            </ul>
+            <div class="capture-placeholder">
+                <i class="fas fa-camera"></i> Captura representativa del menú funcionando.
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. RESULTADOS -->
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-chart-line"></i> Resultados</h2>
+            </div>
+            <p>Script funcional que permite diagnósticos rápidos. Beneficios: automatización, centralización, aprendizaje práctico.</p>
+        </div>
+    </section>
+
+    <!-- 11. CONCLUSIONES -->
+    <section id="conclusiones">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-pen-fancy"></i> Conclusiones</h2>
+            </div>
+            <ul>
+                <li>Los .BAT con menú son ligeros y efectivos.</li>
+                <li>GOTO e IF permiten crear aplicaciones de consola estables.</li>
+                <li>Se integraron conceptos de SO y redes.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 12. RECOMENDACIONES -->
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-lightbulb"></i> Recomendaciones</h2>
+            </div>
+            <ul>
+                <li>Ejecutar como administrador.</li>
+                <li>Exportar resultados a .txt.</li>
+                <li>Validar entradas vacías.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 13. BIBLIOGRAFÍA -->
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-book"></i> Bibliografía</h2>
+            </div>
+            <ul>
+                <li>Microsoft Docs. Comandos de Windows.</li>
+                <li>Tanenbaum, A. Sistemas Operativos Modernos.</li>
+                <li>ss64.com - NT batch commands.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 14. ANEXOS -->
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-paperclip"></i> Anexos</h2>
+            </div>
+            <p>Código completo en sección 8.1. Diagramas de flujo adjuntos.</p>
+        </div>
+    </section>
+
+    <!-- 15. METACOGNICIÓN -->
+    <section id="metacognicion">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-brain"></i> Metacognición</h2>
+            </div>
+            <div class="metacog-grid">
+                <div class="metacog-card">
+                    <h3><i class="fas fa-graduation-cap"></i> ¿Qué aprendí?</h3>
+                    <p>Aprendí a crear menús interactivos en .BAT con GOTO, IF, SET /P. Dominé comandos como systeminfo, ipconfig, ping y tasklist.</p>
+                </div>
+                <div class="metacog-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> ¿Qué fue lo más difícil?</h3>
+                    <p>Manejar el flujo con GOTO para que regrese al menú después de cada comando y filtrar la salida de systeminfo con findstr.</p>
+                </div>
+                <div class="metacog-card">
+                    <h3><i class="fas fa-wrench"></i> ¿Qué mejorarías?</h3>
+                    <p>Exportar resultados a archivo, validar entradas, colores personalizados y agregar opciones como tracert o netstat.</p>
+                </div>
+                <div class="metacog-card key-learning">
+                    <h3><i class="fas fa-star"></i> Aprendizajes clave</h3>
+                    <ul>
+                        <li>.BAT son potentes para automatizar tareas.</li>
+                        <li>GOTO y etiquetas crean menús interactivos.</li>
+                        <li>Es clave validar entradas del usuario.</li>
+                        <li>La metacognición ayuda a identificar áreas de mejora.</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </section>
+
+    <footer>
+        <i class="fas fa-microchip"></i> Proyecto académico - Unidad Educativa Dr. Camilo Gallegos Dominguez | Sistemas Operativos y Redes | Archivo .BAT con menú interactivo
+    </footer>
+</div>
 </body>
 </html>
