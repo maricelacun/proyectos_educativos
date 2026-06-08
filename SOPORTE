@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>EcoTechLab: Electrónica + Reciclaje | Colores Vivos</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, 'Inter', sans-serif;
+            background-color: #FFF9F0; /* base cálida */
+            color: #1E2A3E;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Fondo decorativo de circuitos (coloridos) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.08"><path fill="none" stroke="%23FF3B3F" stroke-width="1.5" d="M20 80 L45 80 L55 60 L80 60 M120 40 L140 40 L150 60 L180 60 M30 140 L55 140 L65 160 L90 160 M150 130 L170 130 L180 110 L195 110"/><circle cx="80" cy="60" r="3" fill="%23FFB800"/><circle cx="150" cy="60" r="3" fill="%23007BFF"/><circle cx="90" cy="160" r="3" fill="%23FF6B35"/></svg>');
+            background-repeat: repeat;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        section {
+            padding: 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h2 {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(135deg, #FF3B3F, #FFB800, #007BFF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 80px;
+            height: 5px;
+            background: #FF6B35;
+            border-radius: 10px;
+        }
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card {
+            background: white;
+            border-radius: 32px;
+            padding: 25px 20px;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-left: 8px solid #FFB800;
+            border-bottom: 2px solid #FF3B3F20;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px -12px #FF3B3F40;
+            border-left-color: #FF3B3F;
+        }
+        .btn {
+            background: linear-gradient(95deg, #FF3B3F, #FF6B35);
+            border: none;
+            padding: 14px 36px;
+            border-radius: 60px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 8px 18px rgba(255, 59, 63, 0.3);
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 28px rgba(255, 107, 53, 0.5);
+            background: linear-gradient(95deg, #FF6B35, #FFB800);
+        }
+
+        /* Hero con colores vibrantes */
+        .hero {
+            background: linear-gradient(125deg, #FF3B3F 0%, #FFB800 50%, #007BFF 100%);
+            padding: 100px 5% 120px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            position: relative;
+            color: white;
+        }
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #FFF5B0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* timeline viva */
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .step {
+            background: white;
+            border-radius: 60px;
+            padding: 15px 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+            border: 1px solid #FFB800;
+            color: #FF3B3F;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+        }
+        .rec-item, .project-card {
+            background: white;
+            border-radius: 28px;
+            text-align: center;
+            padding: 24px 12px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-top: 4px solid #007BFF;
+        }
+        .rec-item i, .project-card i {
+            font-size: 3rem;
+            color: #FF6B35;
+        }
+        .rec-item:hover {
+            background: #FFF2CC;
+            transform: scale(1.02);
+        }
+        .rubrica-table {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .rubrica-table th {
+            background-color: #FFB800;
+            color: #1E2A3E;
+        }
+        .rubrica-table td, .rubrica-table th {
+            padding: 16px 20px;
+            border-bottom: 1px solid #FFDD99;
+        }
+        .quiz-container {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            box-shadow: 0 20px 30px rgba(255, 59, 63, 0.1);
+        }
+        .question {
+            background: #FFF6E5;
+            margin-bottom: 18px;
+            padding: 18px;
+            border-radius: 24px;
+            border-left: 6px solid #FF3B3F;
+        }
+        footer {
+            background: #1E2A3E;
+            color: white;
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 6px solid #FFB800;
+        }
+        .circuit-svg {
+            background: #2A2F3F;
+            border-radius: 36px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+        }
+        @keyframes flowPulse {
+            0% { opacity: 0.3; filter: drop-shadow(0 0 0px #FFB800);}
+            100% { opacity: 1; filter: drop-shadow(0 0 10px #FF3B3F);}
+        }
+        .flow-dot {
+            animation: flowPulse 1s infinite alternate;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: linear-gradient(145deg, white, #FFF2CC);
+            max-width: 450px;
+            border-radius: 32px;
+            padding: 32px;
+            text-align: center;
+            border: 3px solid #FFB800;
+        }
+        @media (max-width: 768px) {
+            h2 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+        .badge-dif {
+            background: #FF3B3F20;
+            border-radius: 40px;
+            padding: 5px 14px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #FF3B3F;
+        }
+        button.accordion {
+            background-color: #FFE0B5;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #B13E00;
+            transition: 0.2s;
+        }
+        button.accordion:hover {
+            background-color: #FFB347;
+            color: white;
+        }
+        .panel {
+            padding: 0 18px;
+            display: none;
+            background-color: #FFFEF7;
+            border-radius: 28px;
+            margin-bottom: 15px;
+        }
+        .highlight {
+            background: #FFB80020;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO con colores fuertes -->
+<div class="hero">
+    <div class="hero-content">
+        <i class="fas fa-recycle" style="font-size: 4rem; color: #FFEB3B; filter: drop-shadow(0 0 6px #FF3B3F);"></i>
+        <i class="fas fa-microchip" style="font-size: 4rem; color: #FFFFFF; margin-left: 10px;"></i>
+        <h1>Proyecto de Electrónica Básica<br>con Materiales Reciclables</h1>
+        <p style="font-size: 1.3rem; margin: 20px 0; font-weight: 600;">♻️ Colores vivos, creatividad y circuito reales 🔌</p>
+        <button class="btn" id="exploreBtn"><i class="fas fa-bolt"></i> Explorar Proyecto</button>
+    </div>
+</div>
+
+<!-- 2. ¿Qué es un circuito electrónico? -->
+<section id="intro">
+    <h2>⚡ ¿Qué es un circuito electrónico?</h2>
+    <div class="grid-cards">
+        <div class="card"><i class="fas fa-project-diagram" style="font-size: 2.5rem; color:#FF3B3F;"></i><h3>Definición</h3><p>Camino cerrado por donde circula la corriente eléctrica, permitiendo el flujo de electrones para alimentar componentes como LEDs, sensores o motores.</p></div>
+        <div class="card"><i class="fas fa-lightbulb" style="font-size: 2.5rem; color:#FFB800;"></i><h3>Importancia</h3><p>Base de toda la tecnología actual: desde una linterna hasta un celular. Aprenderlo te da el poder de crear tus propios dispositivos.</p></div>
+        <div class="card"><i class="fas fa-mobile-alt" style="font-size: 2.5rem; color:#007BFF;"></i><h3>Aplicaciones diarias</h3><p>Semáforos, juguetes, alarmas. Con reciclaje los haces sostenibles y únicos.</p></div>
+    </div>
+</section>
+
+<!-- 3. Objetivo del proyecto (SOLO GENERAL, eliminado específicos) -->
+<section id="objetivos">
+    <h2>🎯 Objetivo General del Proyecto</h2>
+    <div class="grid-cards" style="grid-template-columns: 1fr;">
+        <div class="card" style="background: linear-gradient(105deg, #FFF7E8, #FFF2CC); border-left: 12px solid #FF3B3F;">
+            <i class="fas fa-bullseye" style="font-size: 3rem; color:#FF6B35;"></i>
+            <h3>Objetivo General</h3>
+            <p style="font-size: 1.2rem; font-weight: 500;">Construir un objeto funcional utilizando materiales reciclables e integrar un circuito eléctrico básico para comprender los principios de la electrónica, fomentando la creatividad, el reciclaje y el pensamiento técnico en los estudiantes del módulo de Soporte Técnico.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 4. Componentes Electrónicos (galería interactiva) -->
+<section id="componentes">
+    <h2>🔧 Componentes Electrónicos</h2>
+    <div class="grid-cards" id="compGrid"></div>
+</section>
+
+<!-- 5. Materiales Reciclables -->
+<section id="reciclables">
+    <h2>♻️ Materiales Reciclables</h2>
+    <div class="gallery-grid">
+        <div class="rec-item"><i class="fas fa-box-open"></i><h3>Cartón</h3><p>Estructuras</p></div>
+        <div class="rec-item"><i class="fas fa-wine-bottle"></i><h3>Botellas PET</h3><p>Bases creativas</p></div>
+        <div class="rec-item"><i class="fas fa-circle-notch"></i><h3>Tapas plásticas</h3><p>Ruedas, botones</p></div>
+        <div class="rec-item"><i class="fas fa-trash-alt"></i><h3>Envases reciclados</h3><p>Carcasas</p></div>
+        <div class="rec-item"><i class="fas fa-industry"></i><h3>Latas</h3><p>Contactos</p></div>
+        <div class="rec-item"><i class="fas fa-tree"></i><h3>Madera reutilizada</h3><p>Bases robustas</p></div>
+    </div>
+</section>
+
+<!-- 6. Ideas de Proyectos -->
+<section id="proyectos">
+    <h2>💡 Ideas para construir</h2>
+    <div class="grid-cards">
+        <div class="card"><i class="fas fa-home" style="color:#FF6B35;"></i><h3>Casa iluminada con LED</h3><p>Maqueta de cartón con iluminación interior.</p><span class="badge-dif">⭐ Fácil</span></div>
+        <div class="card"><i class="fas fa-traffic-light" style="color:#FF3B3F;"></i><h3>Semáforo funcional</h3><p>Temporizador con LEDs rojo, amarillo y verde.</p><span class="badge-dif">⭐⭐ Medio</span></div>
+        <div class="card"><i class="fas fa-lightbulb" style="color:#FFB800;"></i><h3>Lámpara ecológica</h3><p>Botella reciclada con LED y potenciómetro.</p><span class="badge-dif">⭐ Fácil</span></div>
+        <div class="card"><i class="fas fa-robot" style="color:#007BFF;"></i><h3>Robot con luces</h3><p>Cuerpo reciclado con ojos LED intermitentes.</p><span class="badge-dif">⭐⭐ Medio</span></div>
+        <div class="card"><i class="fas fa-sun" style="color:#FFA500;"></i><h3>Iluminación automática con LDR</h3><p>Sensor de luz que enciende LED en oscuridad.</p><span class="badge-dif">⭐⭐⭐ Avanzado</span></div>
+        <div class="card"><i class="fas fa-bell" style="color:#FF3B3F;"></i><h3>Alarma sencilla</h3><p>Circuito con interruptor y zumbador.</p><span class="badge-dif">⭐⭐ Medio</span></div>
+    </div>
+</section>
+
+<!-- 7. Diagrama animado -->
+<section id="diagrama">
+    <h2>📡 Diagrama de circuito básico</h2>
+    <div class="circuit-svg" style="text-align: center;">
+        <svg width="100%" height="180" viewBox="0 0 700 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="55" width="60" height="30" fill="#FF3B3F" rx="8" />
+            <text x="22" y="75" fill="white" font-size="12">9V</text>
+            <line x1="70" y1="70" x2="140" y2="70" stroke="#FFB800" stroke-width="5" stroke-dasharray="6 4" />
+            <rect x="140" y="50" width="40" height="40" fill="#007BFF" rx="8" />
+            <text x="148" y="75" fill="white" font-size="10">SW</text>
+            <line x1="180" y1="70" x2="260" y2="70" stroke="#FFB800" stroke-width="5" />
+            <path d="M260 50 L290 70 L260 90" fill="none" stroke="#FF6B35" stroke-width="5" />
+            <text x="270" y="45" fill="#FFD966" font-size="10">R</text>
+            <line x1="290" y1="70" x2="380" y2="70" stroke="#FFB800" stroke-width="5" />
+            <circle cx="380" cy="70" r="18" fill="#FF3B3F" />
+            <text x="374" y="75" fill="white" font-size="12">LED</text>
+            <line x1="398" y1="70" x2="500" y2="70" stroke="#FFB800" stroke-width="5" />
+            <line x1="500" y1="70" x2="500" y2="110" stroke="#FFB800" stroke-width="4" />
+            <line x1="10" y1="110" x2="500" y2="110" stroke="#FFB800" stroke-width="4" />
+            <circle class="flow-dot" r="7" fill="#FFB800">
+                <animate attributeName="cx" values="70;140;180;260;290;380;500" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="cy" values="70;70;70;70;70;70;70" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <text x="530" y="75" fill="white" font-size="13" font-weight="bold">⚡ Flujo de corriente ⚡</text>
+        </svg>
+        <p style="color:#FFF0C0; margin-top: 12px;"><strong>Circuito básico:</strong> Batería → Interruptor → Resistencia → LED → Retorno. ¡La corriente enciende el LED!</p>
+    </div>
+</section>
+
+<!-- 8. Funcionamiento interactivo (acordeón) -->
+<section id="funcionamiento">
+    <h2>🔍 Funcionamiento de los componentes</h2>
+    <p>Toca cada componente y conoce su magia electrónica:</p>
+    <div id="accordionContainer"></div>
+</section>
+
+<!-- 9. Proceso construcción -->
+<section id="proceso">
+    <h2>🛠️ Proceso de construcción</h2>
+    <div class="timeline">
+        <div class="step">1️⃣ Diseño del proyecto</div>
+        <div class="step">2️⃣ Recolección materiales</div>
+        <div class="step">3️⃣ Construcción estructura</div>
+        <div class="step">4️⃣ Instalación del circuito</div>
+        <div class="step">5️⃣ Pruebas de funcionamiento</div>
+        <div class="step">6️⃣ Presentación final 🎉</div>
+    </div>
+</section>
+
+<!-- 10. Esquema presentación tabla -->
+<section>
+    <h2>📋 Esquema de presentación del proyecto</h2>
+    <div style="overflow-x: auto;">
+        <table class="rubrica-table" style="width:100%">
+            <tr><th>Sección</th><th>Descripción</th></tr>
+            <tr><td>Portada</td><td>Título, integrantes, imagen creativa</td></tr>
+            <tr><td>Introducción</td><td>Contexto y motivación</td></tr>
+            <tr><td>Objetivo General</td><td>Meta principal del proyecto</td></tr>
+            <tr><td>Materiales</td><td>Lista de reciclables y electrónicos</td></tr>
+            <tr><td>Diseño</td><td>Croquis o boceto</td></tr>
+            <tr><td>Diagrama</td><td>Circuito esquemático</td></tr>
+            <tr><td>Procedimiento</td><td>Paso a paso detallado</td></tr>
+            <tr><td>Funcionamiento</td><td>Explicación eléctrica</td></tr>
+            <tr><td>Resultados</td><td>Fotos/video del prototipo</td></tr>
+            <tr><td>Conclusiones</td><td>Aprendizajes y mejoras</td></tr>
+            <tr><td>Evidencias</td><td>Fotografías del proceso</td></tr>
+        </table>
+    </div>
+</section>
+
+<!-- 11. Recursos multimedia -->
+<section>
+    <h2>📺 Recursos multimedia</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:25px; justify-content:center;">
+        <iframe width="320" height="200" src="https://www.youtube.com/embed/qqVnzK2WD2A" title="Electrónica básica" frameborder="0" allowfullscreen></iframe>
+        <iframe width="320" height="200" src="https://www.youtube.com/embed/0QHOTx_jn7c" title="LED y resistencias" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div style="text-align:center; margin-top:30px;">
+        <div class="gallery-grid" style="grid-template-columns: repeat(3,1fr);">
+            <div class="rec-item"><i class="fas fa-microchip fa-3x"></i><br>Proyecto LED</div>
+            <div class="rec-item"><i class="fas fa-recycle fa-3x"></i><br>Eco-semáforo</div>
+            <div class="rec-item"><i class="fas fa-charging-station fa-3x"></i><br>Energía divertida</div>
+        </div>
+    </div>
+</section>
+
+<!-- 12. Rúbrica evaluación -->
+<section>
+    <h2>📊 Rúbrica de evaluación</h2>
+    <table class="rubrica-table" style="width:100%">
+        <tr><th>Criterio</th><th>Puntaje máximo</th></tr>
+        <tr><td>Creatividad</td><td>2</td></tr>
+        <tr><td>Uso de materiales reciclables</td><td>2</td></tr>
+        <tr><td>Funcionamiento del circuito</td><td>3</td></tr>
+        <tr><td>Informe</td><td>1.5</td></tr>
+        <tr><td>Exposición</td><td>1.5</td></tr>
+        <tr style="background:#FFE0B5;"><td><strong>Total</strong></td><td><strong>10 puntos</strong></td></tr>
+    </table>
+</section>
+
+<!-- 13. Quiz Interactivo -->
+<section>
+    <h2>🧠 Quiz interactivo: pon a prueba tu conocimiento</h2>
+    <div class="quiz-container" id="quizArea"></div>
+    <button id="submitQuiz" class="btn" style="margin-top:20px;">Calificar Quiz</button>
+    <p id="quizResultado" style="margin-top:20px; font-weight:bold; background:#FFB80030; padding:12px; border-radius:40px;"></p>
+</section>
+
+<footer>
+    <i class="fas fa-laptop-code"></i> Módulo: Soporte Técnico | Año lectivo 2025 <br>
+    Proyecto EcoTec - Electrónica + Sostenibilidad | Colores vivos para mentes creativas <br>
+    <i class="fab fa-instagram"></i> <i class="fab fa-twitter"></i> <i class="fab fa-github"></i> | #ReciclaYEnciende
+</footer>
+
+<div id="componentModal" class="modal"><div class="modal-content"><h3 id="modalTitle" style="color:#FF3B3F;"></h3><p id="modalDesc"></p><button class="btn" onclick="closeModal()">Cerrar</button></div></div>
+
+<script>
+    // Componentes con colores vivos
+    const components = [
+        { nombre: "Diodo LED", funcion: "Emite luz al pasar corriente", simbolo: "▶|◀", practica: "Indicadores luminosos", icono:"fas fa-lightbulb", color:"#FF3B3F" },
+        { nombre: "Resistencia", funcion: "Limita la corriente", simbolo: "─▭─", practica: "Protege LEDs", icono:"fas fa-waveform", color:"#FFB800" },
+        { nombre: "Potenciómetro", funcion: "Ajusta resistencia variable", simbolo: "─▭─ con flecha", practica: "Control de brillo", icono:"fas fa-sliders-h", color:"#FF6B35" },
+        { nombre: "Condensador", funcion: "Almacena carga", simbolo: "─||─", practica: "Filtros y temporizadores", icono:"fas fa-battery-half", color:"#007BFF" },
+        { nombre: "Fotocelda LDR", funcion: "Varía resistencia con luz", simbolo: "flecha luz", practica: "Sensores crepusculares", icono:"fas fa-sun", color:"#FFA500" },
+        { nombre: "Interruptor", funcion: "Abre o cierra circuito", simbolo: "─o/ o─", practica: "Encender/apagar", icono:"fas fa-toggle-on", color:"#FF3B3F" },
+        { nombre: "Cable conductor", funcion: "Transporta electricidad", simbolo: "línea", practica: "Conexiones", icono:"fas fa-plug", color:"#FFB800" },
+        { nombre: "Batería 9V", funcion: "Fuente de energía", simbolo: "─||─", practica: "Portátil", icono:"fas fa-car-battery", color:"#007BFF" }
+    ];
+    const compGrid = document.getElementById("compGrid");
+    compGrid.innerHTML = components.map(c => `<div class="card" style="border-left-color: ${c.color};" onclick="showComponentModal('${c.nombre}', '⚡ Función: ${c.funcion} \\n📐 Símbolo: ${c.simbolo} \\n💡 Aplicación: ${c.practica}')"><i class="${c.icono}" style="font-size:2.2rem; color:${c.color};"></i><h3>${c.nombre}</h3><p>${c.funcion}</p><small>🔌 ${c.practica}</small></div>`).join('');
+
+    function showComponentModal(title, desc) {
+        document.getElementById("modalTitle").innerText = title;
+        document.getElementById("modalDesc").innerText = desc;
+        document.getElementById("componentModal").style.display = "flex";
+    }
+    window.closeModal = () => document.getElementById("componentModal").style.display = "none";
+
+    // Acordeones de funcionamiento
+    const componentsAcc = ["LED", "Resistencia", "Potenciometro", "LDR", "Batería 9V"];
+    const accDesc = {
+        "LED":"🔴 Convierte corriente en luz. Ánodo (+) largo, cátodo (-) corto.",
+        "Resistencia":"🟡 Limita corriente, valor en bandas de colores: ¡protege el LED!",
+        "Potenciometro":"🟠 Resistencia variable: al girar cambia el voltaje o intensidad.",
+        "LDR":"☀️ Resistencia baja con luz alta, alta en oscuridad. Ideal para proyectos automáticos.",
+        "Batería 9V":"🔵 Entrega 9V CC; respetar polaridad rojo (+) y negro (-)."
+    };
+    const accHtml = componentsAcc.map(comp => `<button class="accordion">🔹 ${comp}</button><div class="panel"><p>${accDesc[comp]}</p></div>`).join('');
+    document.getElementById("accordionContainer").innerHTML = accHtml;
+    document.querySelectorAll(".accordion").forEach(btn => {
+        btn.addEventListener("click", function() { let panel = this.nextElementSibling; panel.style.display = panel.style.display === "block" ? "none" : "block"; });
+    });
+
+    // Quiz 10 preguntas (versión entretenida)
+    const questions = [
+        { text:"¿Qué componente limita la corriente en un circuito para proteger un LED?", options:["LED","Resistencia","Batería","Interruptor"], correct:1 },
+        { text:"¿Para qué sirve un potenciómetro?", options:["Variar resistencia","Almacenar energía","Emitir luz","Cortar corriente"], correct:0 },
+        { text:"Material reciclable ideal para la estructura base:", options:["Cartón","Vidrio roto","Plástico virgen","Aluminio puro"], correct:0 },
+        { text:"¿Qué emite luz cuando la corriente fluye?", options:["LDR","LED","Condensador","Potenciometro"], correct:1 },
+        { text:"¿Cuál componente es sensible a la luz y cambia su resistencia?", options:["LDR","Resistencia fija","Transistor","Diodo"], correct:0 },
+        { text:"Símbolo clásico de un interruptor:", options:["─▭─","─||─","─o/ o─","─>─"], correct:2 },
+        { text:"¿Cómo se llama el camino cerrado por donde circula la corriente?", options:["Circuito abierto","Circuito electrónico","Corto circuito","Red abierta"], correct:1 },
+        { text:"¿Qué voltaje entrega una batería cuadrada pequeña?", options:["3V","9V","12V","1.5V"], correct:1 },
+        { text:"Ejemplo de proyecto automático usando LDR:", options:["Semáforo fijo","Lámpara que enciende de noche","Radio FM","Motor DC"], correct:1 },
+        { text:"Beneficio principal de usar reciclaje en este proyecto:", options:["Mayor costo","Reutilización de residuos","Electrónica compleja","Más consumo"], correct:1 }
+    ];
+    const quizDiv = document.getElementById("quizArea");
+    let quizHtml = "";
+    questions.forEach((q, idx) => {
+        quizHtml += `<div class="question"><p><strong>${idx+1}. ${q.text}</strong></p>`;
+        q.options.forEach((opt, optIdx) => {
+            quizHtml += `<label style="display:inline-block; margin-right:20px;"><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`;
+        });
+        quizHtml += `</div>`;
+    });
+    quizDiv.innerHTML = quizHtml;
+    document.getElementById("submitQuiz").addEventListener("click", () => {
+        let score = 0;
+        for(let i=0; i<questions.length; i++) {
+            let selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if(selected && parseInt(selected.value) === questions[i].correct) score++;
+        }
+        document.getElementById("quizResultado").innerHTML = `🎉 Puntaje: ${score}/${questions.length} 🎉 ${score>=7 ? "✅ ¡Genio de la electrónica!" : "💪 ¡Sigue practicando, el reciclaje y la tecnología te esperan!"}`;
+    });
+
+    // Intersection observer
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("visible"); }); }, { threshold:0.1 });
+    sections.forEach(sec => observer.observe(sec));
+    document.getElementById("exploreBtn").addEventListener("click", () => document.getElementById("intro").scrollIntoView({ behavior: "smooth" }));
+    window.addEventListener("load", () => { sections.forEach(sec => { if(sec.getBoundingClientRect().top < window.innerHeight) sec.classList.add("visible"); }); });
+</script>
+</body>
+</html>
