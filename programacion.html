@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Proyecto Integrador Java | Ciclos Repetitivos</title>
+  <!-- Font Awesome 6 (gratis) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Inter y JetBrains Mono para código -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #f0f4ff 0%, #e9eff8 100%);
+      color: #1a2c3e;
+      scroll-behavior: smooth;
+      line-height: 1.5;
+    }
+
+    /* === MENÚ FIJO === */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 25, 45, 0.92);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      padding: 0.9rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .navbar a {
+      color: #f0f9ff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      padding: 0.4rem 0.8rem;
+      border-radius: 30px;
+      letter-spacing: -0.2px;
+    }
+    .navbar a i {
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    .navbar a:hover {
+      background: #2d4a8c;
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    /* Botón volver arriba */
+    .go-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1e3a6b;
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      border: none;
+    }
+    .go-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .go-top:hover {
+      background: #0f2b4f;
+      transform: scale(1.07);
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 110px 1.8rem 3rem;
+    }
+
+    /* Tarjetas modernas */
+    .card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      padding: 1.8rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.05), 0 2px 5px rgba(0,0,0,0.02);
+      transition: transform 0.2s ease, box-shadow 0.3s;
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 40px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    h1 {
+      font-size: 2.6rem;
+      background: linear-gradient(135deg, #0a2b44, #2b6a9e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h2 {
+      font-size: 1.9rem;
+      border-left: 7px solid #2b6a9e;
+      padding-left: 1rem;
+      margin: 1.5rem 0 1rem 0;
+    }
+    h3 {
+      font-size: 1.4rem;
+      margin: 1rem 0 0.5rem;
+      color: #1e4663;
+    }
+
+    /* portada */
+    .hero {
+      background: radial-gradient(circle at 10% 30%, rgba(30,70,110,0.1), rgba(15,40,65,0.05));
+      border-radius: 2.5rem;
+      padding: 2rem 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .hero img {
+      max-width: 120px;
+      margin: 1rem auto;
+    }
+    .badge {
+      background: #1e3a6b;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin: 0.3rem;
+    }
+    .frase {
+      font-style: italic;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #1f5e8c;
+      font-weight: 500;
+    }
+
+    /* Barras de progreso */
+    .progress-container {
+      background: #e2e8f0;
+      border-radius: 40px;
+      height: 12px;
+      margin: 0.5rem 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #2b6a9e, #4299c1);
+      width: 0%;
+      height: 12px;
+      border-radius: 40px;
+      transition: width 1s ease;
+    }
+
+    /* línea de tiempo */
+    .timeline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      margin: 1rem 0;
+    }
+    .timeline-step {
+      flex: 1;
+      background: #eef2fc;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 4px solid #2b6a9e;
+    }
+
+    /* tabla elegante */
+    .modern-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .modern-table th, .modern-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .modern-table th {
+      background: #1e3a6b;
+      color: white;
+    }
+
+    /* bloque pseudocódigo y código */
+    .code-block {
+      background: #0d1b2a;
+      color: #e0e1e9;
+      padding: 1.5rem;
+      border-radius: 1.3rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      box-shadow: inset 0 0 0 1px #2c4c7a;
+    }
+    .java-code {
+      background: #1e2a36;
+      color: #b5e4ff;
+    }
+
+    /* íconos hover */
+    .icon-hover i {
+      transition: transform 0.2s;
+    }
+    .icon-hover:hover i {
+      transform: scale(1.15);
+      color: #2b6a9e;
+    }
+
+    /* responsive */
+    @media (max-width: 780px) {
+      .navbar a span {
+        display: none;
+      }
+      .navbar a i {
+        margin-right: 0;
+        font-size: 1.3rem;
+      }
+      .navbar a {
+        padding: 0.4rem;
+      }
+      .container {
+        padding: 100px 1rem 2rem;
+      }
+      h1 {
+        font-size: 1.9rem;
+      }
+      .timeline {
+        flex-direction: column;
+      }
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: #4a627a;
+    }
+    button, .btn-like {
+      background: none;
+      border: none;
+    }
+    hr {
+      margin: 1rem 0;
+    }
+    .warning-badge {
+      background: #ffeed9;
+      border-left: 6px solid #f59e0b;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="#portada"><i class="fas fa-home"></i><span> Inicio</span></a>
+  <a href="#intro"><i class="fas fa-info-circle"></i><span> Intro</span></a>
+  <a href="#objetivos"><i class="fas fa-bullseye"></i><span> Objetivos</span></a>
+  <a href="#problema"><i class="fas fa-exclamation-triangle"></i><span> Problema</span></a>
+  <a href="#analisis"><i class="fas fa-chart-line"></i><span> Análisis</span></a>
+  <a href="#pseudocodigo"><i class="fas fa-code"></i><span> Pseudocódigo</span></a>
+  <a href="#diagramaF"><i class="fas fa-project-diagram"></i><span> Diagrama</span></a>
+  <a href="#java"><i class="fab fa-java"></i><span> Código Java</span></a>
+  <a href="#rubrica"><i class="fas fa-clipboard-list"></i><span> Rúbrica</span></a>
+</nav>
+
+<div class="go-top" id="goTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<div class="container">
+  <!-- PORTADA -->
+  <section id="portada" class="hero card">
+    <i class="fab fa-java" style="font-size: 3.5rem; color:#1e3a6b;"></i>
+    <h1>Proyecto Integrador de Programación en Java</h1>
+    <p style="font-size:1.3rem; font-weight:600;">Aplicación de Ciclos Repetitivos</p>
+    <div style="margin: 1rem 0;">
+      <span class="badge"><i class="fas fa-chalkboard-teacher"></i> Docente: Ing. Mariana Ríos</span>
+      <span class="badge"><i class="fas fa-users"></i> Curso: 3ro BGU "Tecno"</span>
+      <span class="badge"><i class="fas fa-calendar-alt"></i> Año lectivo: 2025 - 2026</span>
+    </div>
+    <div class="frase">
+      <i class="fas fa-quote-left"></i> "Programar es enseñar a la computadora a resolver problemas."
+    </div>
+    <!-- barra de progreso animada (ejemplo) -->
+    <div class="progress-container" style="margin-top: 1.5rem;"><div class="progress-fill" id="mainProgress" style="width:68%"></div></div>
+    <p style="font-size:0.8rem">Progreso del proyecto: 68% completado (guía interactiva)</p>
+  </section>
+
+  <!-- INTRODUCCIÓN -->
+  <section id="intro" class="card">
+    <h2><i class="fas fa-brain"></i> Introducción</h2>
+    <p>La programación es el arte de crear algoritmos que solucionen problemas del mundo real. Java, lenguaje robusto y multiplataforma, es fundamental para desarrollar lógica de software. Los <strong>ciclos repetitivos (while, do-while, for)</strong> permiten ejecutar bloques de código múltiples veces, automatizando tareas repetitivas como procesar listas, facturas o menús interactivos. Este proyecto integrador aplica todas las etapas del desarrollo: análisis, diseño, codificación y pruebas.</p>
+    <div class="progress-container mt-2"><div class="progress-fill" style="width:100%"></div></div>
+  </section>
+
+  <!-- OBJETIVOS -->
+  <section id="objetivos" class="card">
+    <h2><i class="fas fa-flag-checkered"></i> Objetivos</h2>
+    <p><strong>General:</strong> Diseñar e implementar una aplicación en Java utilizando ciclos repetitivos para resolver una situación práctica mediante el análisis, diseño y programación de algoritmos.</p>
+    <ul style="margin-top:1rem; list-style-type: none;">
+      <li><i class="fas fa-check-circle" style="color:#2b6a9e;"></i> Analizar un problema y definir requerimientos.</li>
+      <li><i class="fas fa-check-circle" style="color:#2b6a9e;"></i> Diseñar algoritmos y elaborar pseudocódigo.</li>
+      <li><i class="fas fa-check-circle" style="color:#2b6a9e;"></i> Construir diagramas de flujo.</li>
+      <li><i class="fas fa-check-circle" style="color:#2b6a9e;"></i> Programar en Java estructuras repetitivas.</li>
+      <li><i class="fas fa-check-circle" style="color:#2b6a9e;"></i> Realizar pruebas y validaciones.</li>
+    </ul>
+  </section>
+
+  <!-- SITUACIÓN PROBLEMA -->
+  <section id="problema" class="card">
+    <h2><i class="fas fa-clinic-medical"></i> Situación Problema</h2>
+    <p>Los estudiantes deben seleccionar un problema cotidiano que requiera repetición de procesos. Ejemplos concretos: </p>
+    <div style="display: flex; flex-wrap: wrap; gap:0.7rem; margin:1rem 0;">
+      <span class="badge" style="background:#2c5282;">📊 Tablas de multiplicar</span>
+      <span class="badge" style="background:#2c5282;">🧾 Facturación simple</span>
+      <span class="badge" style="background:#2c5282;">📋 Control de asistencia</span>
+      <span class="badge" style="background:#2c5282;">💯 Registro de calificaciones</span>
+      <span class="badge" style="background:#2c5282;">🏧 Cajero automático básico</span>
+      <span class="badge" style="background:#2c5282;">💱 Conversor de monedas</span>
+      <span class="badge" style="background:#2c5282;">🔢 Generador series numéricas</span>
+      <span class="badge" style="background:#2c5282;">🍽️ Menú interactivo</span>
+    </div>
+    <div class="warning-badge"><i class="fas fa-lightbulb"></i> <strong>Ejemplo sugerido:</strong> Sistema de ventas con menú repetitivo: permite agregar productos, calcular total y salir solo cuando el usuario lo decida.</div>
+  </section>
+
+  <!-- ANÁLISIS DEL SISTEMA + TABLA -->
+  <section id="analisis" class="card">
+    <h2><i class="fas fa-search"></i> Análisis del Sistema</h2>
+    <table class="modern-table">
+      <tr><th>Componente</th><th>Descripción</th></tr>
+      <tr><td>Nombre del sistema</td><td>Sistema de Control de Ventas con Ciclo</td></tr>
+      <tr><td>Problema identificado</td><td>Registrar ventas repetitivas sin reiniciar la app</td></tr>
+      <tr><td>Usuarios</td><td>Vendedor, administrador</td></tr>
+      <tr><td>Entradas</td><td>Código producto, cantidad, opción menú</td></tr>
+      <tr><td>Procesos</td><td>Calcular subtotal, acumular, mostrar total</td></tr>
+      <tr><td>Salidas</td><td>Factura con total, resumen de ventas</td></tr>
+      <tr><td>Restricciones</td><td>Usar ciclo while/do-while, validaciones</td></tr>
+      <tr><td>Beneficios</td><td>Automatización, práctica de loops</td></tr>
+    </table>
+  </section>
+
+  <!-- DIAGRAMA IPO -->
+  <section class="card">
+    <h2><i class="fas fa-arrow-right-arrow-left"></i> Diagrama IPO</h2>
+    <table class="modern-table">
+      <thead><tr><th>Entrada</th><th>Proceso</th><th>Salida</th></tr></thead>
+      <tbody><tr><td>Opción menú + datos producto</td><td>Mientras opción ≠ salir: leer datos, calcular total acumulado</td><td>Total ventas, mensaje de cierre</td></tr></tbody>
+    </table>
+  </section>
+
+  <!-- PSEUDOCÓDIGO -->
+  <section id="pseudocodigo" class="card">
+    <h2><i class="fas fa-pen-fancy"></i> Pseudocódigo</h2>
+    <div class="code-block">
+      INICIO<br>
+      &nbsp;&nbsp;totalVentas = 0<br>
+      &nbsp;&nbsp;Mostrar menú "1. Agregar producto  2. Salir"<br>
+      &nbsp;&nbsp;Leer opcion<br>
+      &nbsp;&nbsp;MIENTRAS opcion != 2 HACER<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solicitar precio y cantidad<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subtotal = precio * cantidad<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;totalVentas = totalVentas + subtotal<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mostrar "Producto agregado, total parcial: " + totalVentas<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mostrar menú nuevamente, leer opcion<br>
+      &nbsp;&nbsp;FIN MIENTRAS<br>
+      &nbsp;&nbsp;Mostrar "Venta finalizada. Total: $" + totalVentas<br>
+      FIN
+    </div>
+  </section>
+
+  <!-- DIAGRAMA DE FLUJO -->
+  <section id="diagramaF" class="card">
+    <h2><i class="fas fa-chart-simple"></i> Diagrama de Flujo</h2>
+    <p><strong>Simbología clave:</strong> Inicio/Ovalo → Entrada/Paralelogramo → Decisión/Rombo → Proceso repetitivo (loop) → Salida → Fin.</p>
+    <div style="background:#eef2fa; border-radius: 1rem; padding: 1rem; text-align:center;">
+      <i class="fas fa-diagram-project" style="font-size: 3rem; color:#2b6a9e;"></i>
+      <p style="margin-top:0.5rem;">📌 <strong>Espacio para diagrama:</strong> El estudiante elaborará su diagrama de flujo en papel o herramienta digital, anexándolo en el entregable.<br>
+      Estructura: Inicio → Leer opción → ¿Opción=salir? No → Proceso repetitivo (calcular total) → Volver al menú → Sí → Mostrar total → Fin.</p>
+    </div>
+  </section>
+
+  <!-- DESARROLLO EN JAVA + código ejemplo -->
+  <section id="java" class="card">
+    <h2><i class="fab fa-java"></i> Desarrollo del programa en Java</h2>
+    <p>Ejemplo completo usando ciclo <strong>do-while</strong> para un menú interactivo de ventas:</p>
+    <div class="code-block java-code">
+      <pre style="margin:0; font-family: inherit;">
+import java.util.Scanner;
+
+public class ProyectoCiclos {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double totalVentas = 0;
+        int opcion;
+        do {
+            System.out.println("\n=== MENÚ PRINCIPAL ===");
+            System.out.println("1. Registrar venta");
+            System.out.println("2. Finalizar y mostrar total");
+            System.out.print("Seleccione: ");
+            opcion = sc.nextInt();
+            if(opcion == 1) {
+                System.out.print("Precio del producto: $");
+                double precio = sc.nextDouble();
+                System.out.print("Cantidad: ");
+                int cant = sc.nextInt();
+                double subtotal = precio * cant;
+                totalVentas += subtotal;
+                System.out.println("✔ Producto agregado. Subtotal actual: $" + totalVentas);
+            } else if(opcion == 2) {
+                System.out.println("💲 Total de ventas del día: $" + totalVentas);
+            } else {
+                System.out.println("Opción inválida.");
+            }
+        } while(opcion != 2);
+        sc.close();
+        System.out.println("Gracias por usar el sistema.");
+    }
+}
+      </pre>
+    </div>
+    <h3>Explicación del código:</h3>
+    <ul>
+      <li><strong>Scanner:</strong> para entrada de datos desde teclado.</li>
+      <li><strong>Variables:</strong> totalVentas (double) acumula montos, opción (int) controla ciclo.</li>
+      <li><strong>Ciclo do-while:</strong> ejecuta al menos una vez el menú hasta que opción sea 2.</li>
+      <li><strong>Condiciones:</strong> si opción=1 calcula subtotal y acumula; si opción=2 termina y muestra total.</li>
+      <li><strong>Salida de datos:</strong> mensajes informativos y total final.</li>
+    </ul>
+  </section>
+
+  <!-- PRUEBAS DEL SISTEMA -->
+  <section class="card">
+    <h2><i class="fas fa-vial"></i> Pruebas del Sistema</h2>
+    <table class="modern-table">
+      <thead><tr><th>Caso</th><th>Entrada</th><th>Resultado esperado</th><th>Resultado obtenido</th></tr></thead>
+      <tbody>
+        <tr><td>Registro 2 productos</td><td>Opción1, precio 10.5 cant 2 ; opción1, precio 5 cant 3 ; opción2</td><td>Total = (10.5*2)+(5*3)=36.0</td><td>✅ 36.0</td></tr>
+        <tr><td>Salir inmediato</td><td>Opción 2</td><td>Total = 0.0, mensaje final</td><td>✅ coincide</td></tr>
+        <tr><td>Opción inválida</td><td>Opción 3, luego 2</td><td>Mensaje error, continuar</td><td>✅ se maneja</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- EVIDENCIAS -->
+  <section class="card">
+    <h2><i class="fas fa-camera"></i> Evidencias</h2>
+    <p>Incluir capturas de pantalla de la ejecución del programa, código fuente IDE (NetBeans/Eclipse) y fotografías del trabajo colaborativo. Espacio asignado:</p>
+    <div style="background:#edf2f7; border-radius: 1rem; padding: 1.5rem; text-align:center; border:2px dashed #2b6a9e;">
+      <i class="fas fa-image" style="font-size: 2rem;"></i> <i class="fas fa-laptop-code"></i><br>
+      [ Área para adjuntar evidencias visuales en el informe final ]
+    </div>
+  </section>
+
+  <!-- CONCLUSIONES Y RECOMENDACIONES en una fila responsiva -->
+  <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="card" style="flex:1;">
+      <h2><i class="fas fa-check-double"></i> Conclusiones</h2>
+      <ol style="margin-left: 1rem;">
+        <li>Los ciclos repetitivos permiten automatizar procesos interactivos eficientemente.</li>
+        <li>El uso de pseudocódigo y diagrama de flujo facilita la transición a código Java.</li>
+        <li>La implementación con do-while garantiza al menos una ejecución mejorando UX.</li>
+      </ol>
+    </div>
+    <div class="card" style="flex:1;">
+      <h2><i class="fas fa-lightbulb"></i> Recomendaciones</h2>
+      <ol style="margin-left:1rem;">
+        <li>Validar siempre entradas del usuario para evitar errores en tiempo de ejecución.</li>
+        <li>Documentar cada parte del código para facilitar mantenimiento.</li>
+        <li>Realizar pruebas extremas (valores negativos, cero) para robustecer el programa.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- RÚBRICA DE EVALUACIÓN -->
+  <section id="rubrica" class="card">
+    <h2><i class="fas fa-star-of-life"></i> Rúbrica de Evaluación</h2>
+    <table class="modern-table">
+      <thead><tr><th>Criterio</th><th>Puntaje</th></tr></thead>
+      <tbody>
+        <tr><td>Análisis del problema</td><td>10</td></tr><tr><td>Diagrama IPO</td><td>10</td></tr><tr><td>Pseudocódigo</td><td>10</td></tr><tr><td>Diagrama de flujo</td><td>15</td></tr><tr><td>Código Java</td><td>25</td></tr><tr><td>Funcionamiento (pruebas)</td><td>15</td></tr><tr><td>Presentación / evidencias</td><td>10</td></tr><tr><td>Conclusiones</td><td>5</td></tr>
+        <tr style="font-weight:bold; background:#eef2ff;"><td>TOTAL</td><td>100 puntos</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ENTREGABLE FINAL (checklist) -->
+  <section class="card">
+    <h2><i class="fas fa-file-alt"></i> Entregable Final</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 0.8rem;">
+      <span>✅ Portada</span> <span>✅ Introducción</span> <span>✅ Objetivos</span> <span>✅ Análisis del sistema</span>
+      <span>✅ Diagrama IPO</span> <span>✅ Pseudocódigo</span> <span>✅ Diagrama de flujo</span> <span>✅ Código fuente Java</span>
+      <span>✅ Capturas de ejecución</span> <span>✅ Pruebas realizadas</span> <span>✅ Conclusiones</span> <span>✅ Recomendaciones</span>
+      <span>✅ Archivo PDF del proyecto</span> <span>✅ Carpeta con código fuente (.java)</span>
+    </div>
+    <div class="warning-badge" style="margin-top:1rem;"><i class="fas fa-download"></i> El estudiante debe subir todos los elementos a plataforma educativa (PDF + código comprimido).</div>
+  </section>
+
+  <footer>
+    <i class="fab fa-java"></i> Proyecto Integrador - Ciclos Repetitivos | Programación - Instituto Tecnológico
+  </footer>
+</div>
+
+<!-- JavaScript para botón volver arriba y animación de scroll -->
+<script>
+  (function() {
+    const goTopBtn = document.getElementById('goTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        goTopBtn.classList.add('show');
+      } else {
+        goTopBtn.classList.remove('show');
+      }
+    });
+    goTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // animación de barras de progreso cuando entren en viewport (solo ejemplo)
+    const progressBars = document.querySelectorAll('.progress-fill');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          // ya tienen width definido en estilo, solo efecto visual
+          entry.target.style.transition = "width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1)";
+        }
+      });
+    }, { threshold: 0.3 });
+    progressBars.forEach(bar => observer.observe(bar));
+
+    // Menú suave para todos los enlaces internos
+    document.querySelectorAll('.navbar a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElem = document.getElementById(targetId);
+        if(targetElem) {
+          targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
